@@ -1,0 +1,9 @@
+# root workspace artifacts
+/.pnpm-store/
+/node_modules/
+
+# local leftovers from pre-monorepo layout
+/src/node_modules/
+
+# macOS
+.DS_Store
