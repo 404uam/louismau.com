@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { featuredPhotos } from "@/data/photos";
+import { featuredPhotos } from "@/app/data/photos";
 
 export function PhotoGallery() {
   return (

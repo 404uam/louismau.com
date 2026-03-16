@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { featuredProjects } from "@/data/projects";
+import { featuredProjects } from "@/app/data/projects";
 
 export function SoftwarePortfolio() {
   return (

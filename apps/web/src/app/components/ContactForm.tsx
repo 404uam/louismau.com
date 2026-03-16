@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import type { ContactFormData } from "@/types";
+import type { ContactFormData } from "@/app/types";
 
 const initialState: ContactFormData = {
   name: "",
