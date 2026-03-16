@@ -1,9 +1,9 @@
-import { ContactForm } from "@/components/ContactForm";
-import { Footer } from "@/components/Footer";
-import { Hero } from "@/components/Hero";
-import { Navigation } from "@/components/Navigation";
-import { PhotoGallery } from "@/components/PhotoGallery";
-import { SoftwarePortfolio } from "@/components/SoftwarePortfolio";
+import { ContactForm } from "@/app/components/ContactForm";
+import { Footer } from "@/app/components/Footer";
+import { Hero } from "@/app/components/Hero";
+import { Navigation } from "@/app/components/Navigation";
+import { PhotoGallery } from "@/app/components/PhotoGallery";
+import { SoftwarePortfolio } from "@/app/components/SoftwarePortfolio";
 export default function Home() {
   return (
     <>
