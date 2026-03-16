@@ -1,10 +1,11 @@
-# root workspace artifacts
-/.pnpm-store/
-/node_modules/
-
-# local leftovers from pre-monorepo layout
-/src/node_modules/
-/src/.next/
-
-# macOS
+node_modules/
+apps/web/node_modules/
+.next/
+apps/web/.next/
+out/
+apps/web/out/
+pnpm-debug.log*
+.env
+.env.*
+!.env.example
 .DS_Store
