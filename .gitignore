@@ -4,6 +4,7 @@
 
 # local leftovers from pre-monorepo layout
 /src/node_modules/
+/src/.next/
 
 # macOS
 .DS_Store
