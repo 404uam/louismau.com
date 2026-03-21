@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Source_Code_Pro } from "next/font/google";
+import { Instrument_Sans, Source_Code_Pro, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-mono'});
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -36,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-mono", jetbrainsMono.variable)}>
       <body className={`${instrumentSans.variable} ${sourceCodePro.variable} antialiased`}>
         {children}
       </body>
