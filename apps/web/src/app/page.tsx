@@ -3,76 +3,59 @@ import { Footer } from "@/app/components/Footer";
 import { Hero } from "@/app/components/Hero";
 import { Navigation } from "@/app/components/Navigation";
 import { PhotoGallery } from "@/app/components/PhotoGallery";
+import { Section, SectionHeader } from "@/app/components/Section";
 import { SoftwarePortfolio } from "@/app/components/SoftwarePortfolio";
+import { Button } from "@/components/ui/button";
 export default function Home() {
   return (
     <>
       <Navigation />
       <main>
         <Hero />
-        <section className="border-b border-slate-200 bg-slate-50 py-6">
-          <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-            <a
-              className="inline-flex items-center justify-center rounded-full border border-cyan-500/60 px-5 py-2 text-sm font-semibold text-slate-900 transition hover:bg-cyan-500/10"
-              href="/admin"
-            >
-              Admin Uploads
-            </a>
+        <Section className="border-b border-slate-200 bg-slate-50 py-6">
+          <Button
+            asChild
+            variant="outline"
+            className="rounded-full border-cyan-500/60 px-5 py-2 text-sm font-semibold text-slate-900 hover:bg-cyan-500/10"
+          >
+            <a href="/admin">Admin Uploads</a>
+          </Button>
+        </Section>
+
+        <Section id="photos" className="bg-white py-20">
+          <SectionHeader
+            eyebrow="Photography"
+            title="Featured Work"
+            action={
+              <Button asChild variant="link" size="sm" className="h-auto px-0 text-slate-800">
+                <a href="#top">Back to top</a>
+              </Button>
+            }
+          />
+          <PhotoGallery />
+        </Section>
+
+        <Section id="software" className="border-y border-slate-200 bg-slate-50 py-20">
+          <SectionHeader
+            eyebrow="Software"
+            title="Selected Projects"
+            description="A snapshot of recent engineering work across product, platform, and tooling."
+          />
+          <div className="mt-10">
+            <SoftwarePortfolio />
           </div>
-        </section>
-        <section id="photos" className="bg-white py-20">
-          <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-8 flex items-end justify-between gap-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                  Photography
-                </p>
-                <h2 className="mt-2 text-3xl font-semibold text-slate-950 sm:text-4xl">
-                  Featured Work
-                </h2>
-              </div>
-              <a
-                className="text-sm font-semibold text-slate-800 underline-offset-4 hover:underline"
-                href="#top"
-              >
-                Back to top
-              </a>
-            </div>
-            <PhotoGallery />
+        </Section>
+
+        <Section id="contact" className="bg-white py-20" containerClassName="max-w-3xl">
+          <SectionHeader
+            eyebrow="Contact"
+            title="Let us build something meaningful."
+            description="Share a project idea, collaboration request, or photo inquiry."
+          />
+          <div className="mt-8">
+            <ContactForm />
           </div>
-        </section>
-        <section id="software" className="border-y border-slate-200 bg-slate-50 py-20">
-          <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              Software
-            </p>
-            <h2 className="mt-2 text-3xl font-semibold text-slate-950 sm:text-4xl">
-              Selected Projects
-            </h2>
-            <p className="mt-4 max-w-2xl text-base text-slate-700">
-              A snapshot of recent engineering work across product, platform, and tooling.
-            </p>
-            <div className="mt-10">
-              <SoftwarePortfolio />
-            </div>
-          </div>
-        </section>
-        <section id="contact" className="bg-white py-20">
-          <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 lg:px-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              Contact
-            </p>
-            <h2 className="mt-2 text-3xl font-semibold text-slate-950 sm:text-4xl">
-              Let us build something meaningful.
-            </h2>
-            <p className="mt-4 text-base text-slate-700">
-              Share a project idea, collaboration request, or photo inquiry.
-            </p>
-            <div className="mt-8">
-              <ContactForm />
-            </div>
-          </div>
-        </section>
+        </Section>
       </main>
       <Footer />
     </>
