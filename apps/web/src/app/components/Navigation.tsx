@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 const navItems = [
   { href: "#photos", label: "Photos" },
   { href: "#software", label: "Software" },
@@ -11,16 +13,18 @@ export function Navigation() {
         aria-label="Main navigation"
         className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8"
       >
-        <a href="#top" className="text-sm font-semibold tracking-wide text-slate-900">
-          Louis Mau
-        </a>
+        <Button asChild variant="link" size="sm" className="h-auto px-0 text-slate-900">
+          <a href="#top" className="text-sm font-semibold tracking-wide">
+            Louis Mau
+          </a>
+        </Button>
 
         <ul className="flex items-center gap-6 text-sm font-medium text-slate-700">
           {navItems.map((item) => (
             <li key={item.href}>
-              <a className="transition hover:text-slate-900" href={item.href}>
-                {item.label}
-              </a>
+              <Button asChild variant="link" size="sm" className="h-auto px-0 text-slate-700">
+                <a href={item.href}>{item.label}</a>
+              </Button>
             </li>
           ))}
         </ul>

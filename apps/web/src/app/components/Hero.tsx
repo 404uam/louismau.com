@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 export function Hero() {
   return (
     <section
@@ -17,24 +19,19 @@ export function Hero() {
         </p>
 
         <div className="mt-10 flex flex-wrap gap-3">
-          <a
-            href="#photos"
-            className="rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+          <Button asChild className="rounded-full px-6 py-3 text-sm font-semibold">
+            <a href="#photos">Explore Photos</a>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="rounded-full border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-900 hover:border-slate-400"
           >
-            Explore Photos
-          </a>
-          <a
-            href="#software"
-            className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-400"
-          >
-            View Software
-          </a>
-          <a
-            href="#contact"
-            className="rounded-full border border-transparent px-6 py-3 text-sm font-semibold text-slate-800 underline-offset-4 transition hover:underline"
-          >
-            Contact
-          </a>
+            <a href="#software">View Software</a>
+          </Button>
+          <Button asChild variant="link" className="rounded-full px-6 py-3 text-sm font-semibold text-slate-800">
+            <a href="#contact">Contact</a>
+          </Button>
         </div>
       </div>
     </section>
