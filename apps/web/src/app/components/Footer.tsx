@@ -8,13 +8,13 @@ export function Footer() {
         <p>&copy; {new Date().getFullYear()} Louis Mau. All rights reserved.</p>
         <div className="flex items-center gap-3">
           <Button asChild variant="link" size="xs" className="h-auto px-0 text-slate-600">
-            <a href="https://github.com/louismau" target="_blank" rel="noreferrer noopener">
+            <a href="https://github.com/404uam" target="_blank" rel="noreferrer noopener">
               GitHub
             </a>
           </Button>
           <Separator orientation="vertical" className="h-3 bg-slate-300" />
           <Button asChild variant="link" size="xs" className="h-auto px-0 text-slate-600">
-            <a href="https://www.linkedin.com" target="_blank" rel="noreferrer noopener">
+            <a href="https://www.linkedin.com/in/louis-mau" target="_blank" rel="noreferrer noopener">
               LinkedIn
             </a>
           </Button>
