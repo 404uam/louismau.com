@@ -1,20 +1,32 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Local Development
 
-First, run the development server:
+**Next.js dev server (no Cloudflare simulation):**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser.
+
+**Cloudflare Workers local preview (includes KV):**
+
+```bash
+pnpm preview
+```
+
+This simulates the production Worker environment with Cloudflare KV access. Test maintenance mode:
+
+```bash
+# Enable maintenance mode (preview namespace)
+pnpm wrangler kv key put --binding=SITE_CONFIG --preview maintenance_mode true
+
+# Disable
+pnpm wrangler kv key delete --binding=SITE_CONFIG --preview maintenance_mode
+```
+
+Open [http://localhost:8787](http://localhost:8787) (or the port shown in console).
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
@@ -37,7 +49,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Maintenance mode
 
-The site reads a `maintenance_mode` key from the `SITE_CONFIG` Cloudflare KV namespace. When set to `on`, middleware rewrites every request to `/maintenance`. Toggling does not require a redeploy and propagates within ~60s.
+The site reads a `maintenance_mode` key from the `SITE_CONFIG` Cloudflare KV namespace. When set to `true`, middleware rewrites every request to `/maintenance`. Toggling does not require a redeploy and propagates within ~60s.
 
 Enable (production):
 
