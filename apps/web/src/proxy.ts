@@ -1,7 +1,7 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { NextResponse, type NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { env } = await getCloudflareContext({ async: true });
   const maintenanceMode = await env.SITE_CONFIG.get("maintenance_mode");
 
