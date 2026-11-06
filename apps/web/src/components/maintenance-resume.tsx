@@ -1,10 +1,14 @@
 "use client";
 
 import { useRef, useState, type ReactNode } from "react";
-import ResumeCard from "@/components/resume-card";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { EMAIL_URL } from "@/consts";
 import styles from "./maintenance-resume.module.css";
+
+const ResumeCard = dynamic(() => import("@/components/resume-card"), {
+  loading: () => <p role="status" className={`${styles.resumePanel} p-4`}>Loading resume...</p>,
+});
 
 type MaintenanceResumeProps = {
   children: ReactNode;
@@ -50,9 +54,9 @@ export default function MaintenanceResume({ children }: MaintenanceResumeProps) 
       <div className={styles.resumeSlot} inert={!isOpen} aria-hidden={!isOpen}>
         <section
           id="maintenance-resume"
-          aria-labelledby="maintenance-resume-title"
+          aria-label="Resume"
         >
-          <ResumeCard onClose={closeResume} className={styles.resumePanel} />
+          {isOpen ? <ResumeCard onClose={closeResume} className={styles.resumePanel} /> : null}
         </section>
       </div>
     </main>
