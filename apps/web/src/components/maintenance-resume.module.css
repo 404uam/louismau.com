@@ -15,6 +15,13 @@
   text-align: center;
 }
 
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
 .resumeSlot {
   display: none;
   min-width: 0;

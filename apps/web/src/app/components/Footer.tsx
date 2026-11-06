@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { GITHUB_URL, LINKEDIN_URL, PHOTOGRAPHY_INSTAGRAM_URL } from "@/consts";
+import { EMAIL_URL, GITHUB_URL, LINKEDIN_URL, PHOTOGRAPHY_INSTAGRAM_URL } from "@/consts";
 
 export function Footer() {
   return (
@@ -27,7 +27,7 @@ export function Footer() {
           </Button>
           <Separator orientation="vertical" className="h-3 bg-slate-300" />
           <Button asChild variant="link" size="xs" className="h-auto px-0 text-slate-600">
-            <a href="mailto:hello@louismau.com">Email</a>
+            <a href={EMAIL_URL}>Email</a>
           </Button>
         </div>
       </div>
