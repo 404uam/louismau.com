@@ -1,9 +1,10 @@
 import { GithubLogo, InstagramLogo, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
 import { GITHUB_URL, LINKEDIN_URL, PHOTOGRAPHY_INSTAGRAM_URL } from "@/consts";
+import MaintenanceResume from "@/components/maintenance-resume";
 
 export default function MaintenancePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
+    <MaintenanceResume>
       <h1 className="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
         Louis Mau
       </h1>
@@ -40,6 +41,6 @@ export default function MaintenancePage() {
           <InstagramLogo size={20} weight="regular" />
         </a>
       </div>
-    </main>
+    </MaintenanceResume>
   );
 }
