@@ -51,7 +51,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 The site reads a `maintenance_mode` key from the `SITE_CONFIG` Cloudflare KV namespace. Maintenance mode is enabled by default: only the exact string `false` opens the site. Missing or invalid values, a missing binding, and configuration lookup errors all fall back to maintenance mode. Without a Cloudflare context, the plain Next.js dev server also defaults to maintenance mode.
 
-While enabled, the proxy rewrites matching page requests to `/maintenance` and responds with HTTP 503, `Cache-Control: no-store`, and `Retry-After: 300`. The maintenance route and static assets bypass the check so the page can render. The standalone maintenance UI lives in `src/components/maintenance-page.tsx`.
+While enabled, Edge Middleware rewrites matching page requests to `/maintenance` and responds with HTTP 503, `Cache-Control: no-store`, and `Retry-After: 300`. The maintenance route and static assets bypass the check so the page can render. The standalone maintenance UI lives in `src/components/maintenance-page.tsx`. Use the `middleware.ts` convention here: the installed OpenNext Cloudflare adapter does not support the Node.js runtime used by Next.js 16's `proxy.ts`.
 
 Toggling does not require a redeploy. KV changes can take 60 seconds or more to propagate globally. Configure real namespace IDs in `wrangler.jsonc` before deployment.
 

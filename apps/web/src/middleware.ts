@@ -1,11 +1,11 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { NextResponse, type NextRequest } from "next/server";
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   let maintenanceMode = true;
 
   try {
-    const { env } = await getCloudflareContext({ async: true });
+    const { env } = getCloudflareContext();
     // Only an explicit opt-out opens the site; missing or invalid config stays closed.
     maintenanceMode = (await env.SITE_CONFIG.get("maintenance_mode")) !== "false";
   } catch {
