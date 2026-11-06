@@ -8,8 +8,10 @@
     "nodejs_compat"
   ],
   "assets": {
+    // OpenNext copies public/ (including maintenance/haku.png) into this folder.
     "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
+    "run_worker_first": false
   },
   "routes": [
     {

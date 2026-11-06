@@ -1,10 +1,12 @@
 import { GithubLogo, InstagramLogo, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
 import { GITHUB_URL, LINKEDIN_URL, PHOTOGRAPHY_INSTAGRAM_URL } from "@/consts";
 import MaintenanceResume from "@/components/maintenance-resume";
+import DraggableHaku from "@/components/draggable-haku";
 
 export default function MaintenancePage() {
   return (
     <MaintenanceResume>
+      <DraggableHaku />
       <h1 className="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
         Louis Mau
       </h1>
