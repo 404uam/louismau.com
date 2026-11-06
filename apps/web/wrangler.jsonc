@@ -20,8 +20,8 @@
   "kv_namespaces": [
     {
       "binding": "SITE_CONFIG",
-      "id": "<REPLACE_WITH_ID_FROM_WRANGLER_CREATE>",
-      "preview_id": "<REPLACE_WITH_PREVIEW_ID>"
+      "id": "02cb9c8ec0364f39b7824de4ca6a2bc4",
+      "preview_id": "f8707bd200f5427b89b50a49df38868a"
     }
   ]
 }
