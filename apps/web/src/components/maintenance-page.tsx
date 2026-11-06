@@ -1,4 +1,4 @@
-import { GithubLogo, InstagramLogo, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
+import {  GithubLogoIcon, InstagramLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { GITHUB_URL, LINKEDIN_URL, PHOTOGRAPHY_INSTAGRAM_URL } from "@/consts";
 import MaintenanceResume from "@/components/maintenance-resume";
 import DraggableHaku from "@/components/draggable-haku";
@@ -22,7 +22,7 @@ export default function MaintenancePage() {
           aria-label="GitHub"
           className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
         >
-          <GithubLogo size={20} weight="regular" />
+          <GithubLogoIcon size={20} weight="duotone" />
         </a>
         <a
           href={LINKEDIN_URL}
@@ -31,7 +31,7 @@ export default function MaintenancePage() {
           aria-label="LinkedIn"
           className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
         >
-          <LinkedinLogo size={20} weight="regular" />
+          <LinkedinLogoIcon size={20} weight="duotone" />
         </a>
         <a
           href={PHOTOGRAPHY_INSTAGRAM_URL}
@@ -40,7 +40,7 @@ export default function MaintenancePage() {
           aria-label="Photography Instagram"
           className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
         >
-          <InstagramLogo size={20} weight="regular" />
+          <InstagramLogoIcon size={20} weight="duotone" />
         </a>
       </div>
     </MaintenanceResume>
