@@ -2,13 +2,26 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function proxy(request: NextRequest) {
-  const { env } = await getCloudflareContext({ async: true });
-  const maintenanceMode = await env.SITE_CONFIG.get("maintenance_mode");
+  let maintenanceMode = true;
 
-  if (maintenanceMode === "true") {
+  try {
+    const { env } = await getCloudflareContext({ async: true });
+    // Only an explicit opt-out opens the site; missing or invalid config stays closed.
+    maintenanceMode = (await env.SITE_CONFIG.get("maintenance_mode")) !== "false";
+  } catch {
+    console.error("Maintenance configuration unavailable; showing maintenance page.");
+  }
+
+  if (maintenanceMode) {
     const url = request.nextUrl.clone();
     url.pathname = "/maintenance";
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, {
+      status: 503,
+      headers: {
+        "Cache-Control": "no-store",
+        "Retry-After": "300",
+      },
+    });
   }
 
   return NextResponse.next();

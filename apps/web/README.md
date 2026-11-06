@@ -22,8 +22,8 @@ This simulates the production Worker environment with Cloudflare KV access. Test
 # Enable maintenance mode (preview namespace)
 pnpm wrangler kv key put --binding=SITE_CONFIG --preview maintenance_mode true
 
-# Disable
-pnpm wrangler kv key delete --binding=SITE_CONFIG --preview maintenance_mode
+# Disable (only an explicit false opens the site)
+pnpm wrangler kv key put --binding=SITE_CONFIG --preview maintenance_mode false
 ```
 
 Open [http://localhost:8787](http://localhost:8787) (or the port shown in console).
@@ -49,7 +49,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Maintenance mode
 
-The site reads a `maintenance_mode` key from the `SITE_CONFIG` Cloudflare KV namespace. When set to `true`, middleware rewrites every request to `/maintenance`. Toggling does not require a redeploy and propagates within ~60s.
+The site reads a `maintenance_mode` key from the `SITE_CONFIG` Cloudflare KV namespace. Maintenance mode is enabled by default: only the exact string `false` opens the site. Missing or invalid values, a missing binding, and configuration lookup errors all fall back to maintenance mode. Without a Cloudflare context, the plain Next.js dev server also defaults to maintenance mode.
+
+While enabled, the proxy rewrites matching page requests to `/maintenance` and responds with HTTP 503, `Cache-Control: no-store`, and `Retry-After: 300`. The maintenance route and static assets bypass the check so the page can render. The standalone maintenance UI lives in `src/components/maintenance-page.tsx`.
+
+Toggling does not require a redeploy. KV changes can take 60 seconds or more to propagate globally. Configure real namespace IDs in `wrangler.jsonc` before deployment.
 
 Enable (production):
 
@@ -60,7 +64,7 @@ pnpm wrangler kv key put --binding=SITE_CONFIG --remote maintenance_mode true
 Disable (production):
 
 ```bash
-pnpm wrangler kv key delete --binding=SITE_CONFIG --remote maintenance_mode
+pnpm wrangler kv key put --binding=SITE_CONFIG --remote maintenance_mode false
 ```
 
 For local `wrangler dev`, swap `--remote` for `--preview` to operate on the preview namespace.
