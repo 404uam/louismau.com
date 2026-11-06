@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next build && next dev",
     "build": "next build",
+    "cloudflare-build": "next build && opennextjs-cloudflare build",
     "lint": "pnpm --filter web lint",
     "start": "next start",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
