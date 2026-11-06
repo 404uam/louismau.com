@@ -8,13 +8,22 @@
     "nodejs_compat"
   ],
   "assets": {
+    // OpenNext copies public/ (including maintenance/haku.png) into this folder.
     "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
+    "run_worker_first": false
   },
   "routes": [
     {
       "pattern": "louismau.com",
       "custom_domain": true
     }
-   ]
+   ],
+  "kv_namespaces": [
+    {
+      "binding": "SITE_CONFIG",
+      "id": "02cb9c8ec0364f39b7824de4ca6a2bc4",
+      "preview_id": "f8707bd200f5427b89b50a49df38868a"
+    }
+  ]
 }
