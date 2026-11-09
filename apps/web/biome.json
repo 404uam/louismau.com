@@ -15,12 +15,15 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"preset": "recommended"
+			"preset": "recommended",
+			"correctness": {
+				"noUnusedVariables": "error"
+			}			
 		}
 	},
 	"javascript": {
 		"formatter": {
-			"quoteStyle": "double"
+			"quoteStyle": "double",
 		}
 	},
 	"css": {
