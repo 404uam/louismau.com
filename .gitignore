@@ -12,3 +12,6 @@ pnpm-debug.log*
 .air/
 
 .idea/
+.agents
+.claude
+.wrangler
