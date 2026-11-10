@@ -2,6 +2,36 @@
 	flex-shrink: 0;
 }
 
+.portfolio {
+	border: 0;
+	border-radius: 0;
+	background: var(--background);
+	box-shadow: none;
+}
+
+.portfolio :is(h3, h4, dt) {
+	color: var(--foreground);
+}
+
+.portfolio article,
+.portfolio :is(p, span) {
+	color: var(--muted-foreground);
+}
+
+.portfolio header {
+	border-color: var(--border);
+}
+
+.portfolio li::marker {
+	color: var(--muted-foreground);
+}
+
+.portfolio .content:focus-visible {
+	outline: 2px solid var(--foreground);
+	outline-offset: -2px;
+	box-shadow: none;
+}
+
 .content {
 	min-height: 0;
 	flex: 1;

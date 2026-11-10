@@ -5,16 +5,21 @@ import {
 	CardDescription,
 	CardHeader,
 } from "@/components/ui/card";
-import { resume } from "@/app/data/resume";
+import { resume } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import styles from "./resume-card.module.css";
 
 type ResumeCardProps = {
 	onClose?: () => void;
 	className?: string;
+	presentation?: "default" | "portfolio";
 };
 
-export default function ResumeCard({ onClose, className }: ResumeCardProps) {
+export default function ResumeCard({
+	onClose,
+	className,
+	presentation = "default",
+}: ResumeCardProps) {
 	const updatedDate = new Intl.DateTimeFormat("en-US", {
 		year: "numeric",
 		month: "long",
@@ -23,38 +28,46 @@ export default function ResumeCard({ onClose, className }: ResumeCardProps) {
 	}).format(new Date(resume.lastUpdated));
 
 	return (
-		<Card className={cn("flex min-h-0 flex-col overflow-hidden", className)}>
-			<CardHeader
-				className={cn(
-					"flex-row flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-4 py-3",
-					styles.header,
-				)}
-			>
-				<div className="space-y-1">
-					<h2
-						id="maintenance-resume-title"
-						className="text-sm font-semibold text-slate-900"
-					>
-						Resume
-					</h2>
-					<CardDescription className="text-xs">
-						Last updated:{" "}
-						<time dateTime={resume.lastUpdated}>{updatedDate}</time>
-					</CardDescription>
-				</div>
-				<div className="flex items-center gap-2">
-					{onClose ? (
-						<Button
-							type="button"
-							variant="ghost"
-							onClick={onClose}
-							className="min-h-11 rounded-md"
+		<Card
+			className={cn(
+				"flex min-h-0 flex-col overflow-hidden",
+				presentation === "portfolio" && styles.portfolio,
+				className,
+			)}
+		>
+			{presentation === "default" ? (
+				<CardHeader
+					className={cn(
+						"flex-row flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-4 py-3",
+						styles.header,
+					)}
+				>
+					<div className="space-y-1">
+						<h2
+							id="maintenance-resume-title"
+							className="text-sm font-semibold text-slate-900"
 						>
-							Close
-						</Button>
-					) : null}
-				</div>
-			</CardHeader>
+							Resume
+						</h2>
+						<CardDescription className="text-xs">
+							Last updated:{" "}
+							<time dateTime={resume.lastUpdated}>{updatedDate}</time>
+						</CardDescription>
+					</div>
+					<div className="flex items-center gap-2">
+						{onClose ? (
+							<Button
+								type="button"
+								variant="ghost"
+								onClick={onClose}
+								className="min-h-11 rounded-md"
+							>
+								Close
+							</Button>
+						) : null}
+					</div>
+				</CardHeader>
+			) : null}
 			<CardContent
 				tabIndex={0}
 				aria-label="Resume content"
@@ -69,6 +82,12 @@ export default function ResumeCard({ onClose, className }: ResumeCardProps) {
 							{resume.name}
 						</h3>
 						<p className="font-medium text-slate-600">{resume.title}</p>
+						{presentation === "portfolio" ? (
+							<p className="text-xs text-slate-500">
+								Last updated:{" "}
+								<time dateTime={resume.lastUpdated}>{updatedDate}</time>
+							</p>
+						) : null}
 					</header>
 
 					<section aria-labelledby="resume-summary" className="space-y-3">

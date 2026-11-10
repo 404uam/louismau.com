@@ -16,3 +16,5 @@ pnpm-debug.log*
 .claude
 .wrangler
 docs/
+.mcp.json
+.vscode

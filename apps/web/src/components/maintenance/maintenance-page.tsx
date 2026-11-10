@@ -3,9 +3,9 @@ import {
 	InstagramLogoIcon,
 	LinkedinLogoIcon,
 } from "@phosphor-icons/react/dist/ssr";
+import DraggableHaku from "@/components/maintenance/draggable-haku";
+import MaintenanceResume from "@/components/maintenance/maintenance-resume";
 import { GITHUB_URL, LINKEDIN_URL, PHOTOGRAPHY_INSTAGRAM_URL } from "@/consts";
-import MaintenanceResume from "@/components/maintenance-resume";
-import DraggableHaku from "@/components/draggable-haku";
 
 export default function MaintenancePage() {
 	return (

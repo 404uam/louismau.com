@@ -1,12 +1,12 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
+import { type ReactNode, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { EMAIL_URL } from "@/consts";
 import styles from "./maintenance-resume.module.css";
 
-const ResumeCard = dynamic(() => import("@/components/resume-card"), {
+const ResumeCard = dynamic(() => import("@/components/resume/resume-card"), {
 	loading: () => (
 		<p role="status" className={`${styles.resumePanel} p-4`}>
 			Loading resume...

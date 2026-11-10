@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import {
+	type PointerEvent,
 	useEffect,
 	useEffectEvent,
 	useId,
 	useRef,
-	type PointerEvent,
 } from "react";
 import styles from "./draggable-haku.module.css";
 
@@ -92,14 +92,14 @@ export default function DraggableHaku() {
 
 	const onMove = useEffectEvent(moveDrag);
 	const onFinish = useEffectEvent(finishDrag);
+	const keepInView = useEffectEvent(() => {
+		// Leave the initial image in the document flow until it has been moved.
+		if (buttonRef.current?.dataset.moved === "true") {
+			place(positionRef.current.x, positionRef.current.y);
+		}
+	});
 
 	useEffect(() => {
-		function keepInView() {
-			// Leave the initial image in the document flow until it has been moved.
-			if (buttonRef.current?.dataset.moved === "true") {
-				place(positionRef.current.x, positionRef.current.y);
-			}
-		}
 		function cancelDrag() {
 			if (dragRef.current) onFinish(dragRef.current);
 		}
