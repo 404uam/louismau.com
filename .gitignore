@@ -15,3 +15,4 @@ pnpm-debug.log*
 .agents
 .claude
 .wrangler
+docs/
