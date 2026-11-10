@@ -80,9 +80,6 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
 								<Dialog.Title className={styles.dialogTitle}>
 									Resume
 								</Dialog.Title>
-								<Dialog.Description className={styles.dialogDescription}>
-									Experience, skills, and education.
-								</Dialog.Description>
 							</div>
 							<Dialog.Close asChild>
 								<Button
