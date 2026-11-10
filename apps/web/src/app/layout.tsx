@@ -4,6 +4,7 @@ import {
 	JetBrains_Mono,
 	Source_Code_Pro,
 } from "next/font/google";
+import type { ReactNode } from "react";
 import "./globals.css";
 import { SidebarProvider } from "@/components/portfolio/sidebar-state";
 import { cn } from "@/lib/utils";
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
 	children,
 }: Readonly<{
-	children: React.ReactNode;
+	children: ReactNode;
 }>) {
 	return (
 		<html
