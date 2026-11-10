@@ -1,14 +1,13 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
 	let maintenanceMode = true;
 
-
-	if(process.env.NODE_ENV === 'development'){
-		console.debug('running in dev mode, skipping maintenance mode check')
+	if (process.env.NODE_ENV === "development") {
+		console.debug("running in dev mode, skipping maintenance mode check");
 		maintenanceMode = false;
-	} 
+	}
 
 	try {
 		const { env } = getCloudflareContext();
@@ -16,12 +15,10 @@ export async function middleware(request: NextRequest) {
 		maintenanceMode =
 			(await env.SITE_CONFIG.get("maintenance_mode")) !== "false";
 	} catch {
-		console.debug(
-			"Maintenance configuration unavailable;",
-		);
+		console.debug("Maintenance configuration unavailable;");
 	}
 
-	 if (maintenanceMode) {
+	if (maintenanceMode) {
 		const url = request.nextUrl.clone();
 		url.pathname = "/maintenance";
 		return NextResponse.rewrite(url, {

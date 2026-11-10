@@ -3,10 +3,12 @@
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
-		"useIgnoreFile": true
+		"useIgnoreFile": true,
+		"root": "./"
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": ["**/src/*", "!!**/wrangler.jsonc", "!!**/package.json"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -18,7 +20,7 @@
 			"preset": "recommended",
 			"correctness": {
 				"noUnusedVariables": "error"
-			}			
+			}
 		}
 	},
 	"javascript": {
