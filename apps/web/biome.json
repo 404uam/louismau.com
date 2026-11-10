@@ -8,7 +8,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**/src/*", "!!**/wrangler.jsonc", "!!**/package.json"]
+		"includes": ["**/src/**", "!!**/wrangler.jsonc", "!!**/package.json"]
 	},
 	"formatter": {
 		"enabled": true,

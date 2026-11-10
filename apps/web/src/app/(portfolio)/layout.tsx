@@ -15,7 +15,7 @@ export default function SidebarLayout({ children }: { children: ReactNode }) {
 			</a>
 			<ResumeProvider>
 				<PortfolioNavigation
-                collapsible
+					collapsible
 					projects={projectLinks(projects)}
 					collections={collectionLinks(collections)}
 					footer={
