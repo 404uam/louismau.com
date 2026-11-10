@@ -152,6 +152,8 @@
 	line-height: 1.3;
 	font-weight: 500;
 	letter-spacing: -0.055em;
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
 }
 .menuToggle {
 	display: inline-flex;
@@ -643,6 +645,62 @@
 		padding: 1rem;
 	}
 }
+
+.entrySidebar {
+	position: fixed;
+	inset: 0 auto 0 0;
+	z-index: 20;
+	display: flex;
+	flex-direction: column;
+	width: 4.5rem;
+	height: 100dvh;
+	padding: 2.5rem 0.75rem 2rem;
+	border-bottom: 0;
+	border-right: 1px solid var(--border);
+	background: var(--background);
+	overflow-y: auto;
+	transition: width 180ms ease;
+}
+.entrySidebar[data-open="true"] {
+	width: 15rem;
+}
+.entrySidebar .brand {
+	display: none;
+}
+.entrySidebar[data-open="true"] .brand {
+	display: block;
+}
+.entrySidebar .menuToggle {
+	display: inline-flex;
+	width: 2.75rem;
+	padding: 0;
+}
+.entrySidebar .navigationPanel {
+	display: none;
+}
+.entrySidebar .navigationPanel[data-open="true"] {
+	display: flex;
+	flex: 1;
+	padding-top: 0.5rem;
+}
+.entrySidebar .sidebarFooter {
+	margin-top: auto;
+	padding-top: 3rem;
+}
+.entrySite .entry,
+.entrySidebar ~ .showcase {
+	margin-left: 4.5rem;
+	transition: margin-left 180ms ease;
+}
+@media (min-width: 1024px) {
+	.entrySite:has(.entrySidebar[data-open="true"]) .entry {
+		margin-left: 15rem;
+	}
+	.entrySidebar[data-open="true"] ~ .showcase {
+		margin-left: 15rem;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.theme,
 	.theme *,

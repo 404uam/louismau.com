@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import {
 	Instrument_Sans,
-	Source_Code_Pro,
 	JetBrains_Mono,
+	Source_Code_Pro,
 } from "next/font/google";
 import "./globals.css";
+import { SidebarProvider } from "@/components/portfolio/sidebar-state";
 import { cn } from "@/lib/utils";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -46,11 +47,15 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={cn("font-mono", jetbrainsMono.variable)}>
+		<html
+			lang="en"
+			data-scroll-behavior="smooth"
+			className={cn("font-mono", jetbrainsMono.variable)}
+		>
 			<body
 				className={`${instrumentSans.variable} ${sourceCodePro.variable} antialiased`}
 			>
-				{children}
+				<SidebarProvider>{children}</SidebarProvider>
 			</body>
 		</html>
 	);

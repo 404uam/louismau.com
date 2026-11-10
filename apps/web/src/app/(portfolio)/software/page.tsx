@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function SoftwarePage() {
 	return (
-		<main id="main-content" tabIndex={-1} className={styles.content}>
+		<main id="main-content" tabIndex={-1} className={styles.content} data-scroll-behavior="smooth">
 			<header className={styles.pageHeader}>
 				<div className={styles.pageTopline}>
 					<p className={styles.label}>Louis Mau / Selected work</p>
