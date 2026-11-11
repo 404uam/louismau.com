@@ -8,12 +8,14 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { type ReactNode, useRef } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
 import type { SectionLink } from "@/app/types/portfolio";
 import { Button } from "@/components/ui/button";
 import styles from "./portfolio.module.css";
 import { useResume } from "./resume-dialog";
 import { useSidebar } from "./sidebar-state";
+
+const MOBILE_OVERLAY_QUERY = "(max-width: 1023px)";
 
 export function PortfolioNavigation({
 	projects,
@@ -29,6 +31,7 @@ export function PortfolioNavigation({
 	const pathname = usePathname();
 	const { open: menuOpen, setOpen } = useSidebar();
 	const toggleRef = useRef<HTMLButtonElement>(null);
+	const sidebarRef = useRef<HTMLElement>(null);
 	const { openResume } = useResume();
 	const isSoftware = pathname === "/software";
 	const sections = isSoftware ? projects : collections;
@@ -37,10 +40,45 @@ export function PortfolioNavigation({
 		setOpen(false);
 	}
 
+	useEffect(() => {
+		if (!collapsible || !menuOpen) return;
+
+		function handlePointerDown(event: PointerEvent) {
+			const sidebar = sidebarRef.current;
+			if (
+				window.matchMedia(MOBILE_OVERLAY_QUERY).matches &&
+				sidebar &&
+				event.target instanceof Node &&
+				!sidebar.contains(event.target)
+			) {
+				closeMenu();
+			}
+		}
+
+		document.addEventListener("pointerdown", handlePointerDown, true);
+		return () => {
+			document.removeEventListener("pointerdown", handlePointerDown, true);
+		};
+	}, [collapsible, menuOpen, setOpen]);
+
 	return (
 		<aside
+			ref={sidebarRef}
 			className={`${styles.sidebar} ${collapsible ? styles.entrySidebar : ""}`}
 			data-open={menuOpen}
+			onBlur={(event) => {
+				if (
+					collapsible &&
+					menuOpen &&
+					window.matchMedia(MOBILE_OVERLAY_QUERY).matches &&
+					!(
+						event.relatedTarget instanceof Node &&
+						event.currentTarget.contains(event.relatedTarget)
+					)
+				) {
+					closeMenu();
+				}
+			}}
 			onKeyDown={(event) => {
 				if (event.key === "Escape" && menuOpen) {
 					closeMenu();
@@ -125,7 +163,7 @@ export function PortfolioNavigation({
 						aria-haspopup="dialog"
 						onClick={(event) => {
 							const returnTo =
-								collapsible || window.matchMedia("(max-width: 1023px)").matches
+								collapsible || window.matchMedia(MOBILE_OVERLAY_QUERY).matches
 									? toggleRef.current
 									: event.currentTarget;
 							closeMenu();
