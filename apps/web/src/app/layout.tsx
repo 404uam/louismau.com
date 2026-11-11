@@ -24,24 +24,6 @@ const sourceCodePro = Source_Code_Pro({
 	subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-	title: "Louis Mau | Photography + Software",
-	description:
-		"Portfolio for Louis Mau featuring photography and software engineering work.",
-	openGraph: {
-		title: "Louis Mau | Photography + Software",
-		description:
-			"Portfolio for Louis Mau featuring photography and software engineering work.",
-		type: "website",
-	},
-	twitter: {
-		card: "summary_large_image",
-		title: "Louis Mau | Photography + Software",
-		description:
-			"Portfolio for Louis Mau featuring photography and software engineering work.",
-	},
-};
-
 export default function RootLayout({
 	children,
 }: Readonly<{
