@@ -25,15 +25,19 @@
       "preview_id": "f8707bd200f5427b89b50a49df38868a"
     }
   ],
-  "previews": {
-    "vars":{
-      "ENVIRONMENT": "preview"
-    },
-    "kv_namespaces": [
-      {
-        "binding": "SITE_CONFIG",
-        "id": "f8707bd200f5427b89b50a49df38868a"
-      }
-    ],
+  "env": {
+    "preview": {
+      "workers_dev": true,
+      "routes": [],
+      "vars": {
+        "ENVIRONMENT": "preview"
+      },
+      "kv_namespaces": [
+        {
+          "binding": "SITE_CONFIG",
+          "id": "f8707bd200f5427b89b50a49df38868a"
+        }
+      ]
+    }
   }
 }
