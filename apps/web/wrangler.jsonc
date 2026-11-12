@@ -2,11 +2,11 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
   "name": "louismaudotcom",
-  // Set this to today's date
   "compatibility_date": "2026-03-20",
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "preview_urls": true,
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS",
@@ -15,7 +15,8 @@
   "routes": [
     {
       "pattern": "louismau.com",
-      "custom_domain": true
+      "custom_domain": true,
+      "previews_enabled": true
     }
    ],
   "kv_namespaces": [
