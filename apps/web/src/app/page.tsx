@@ -1,11 +1,11 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PortfolioNavigation } from "@/components/portfolio/navigation";
 import styles from "@/components/portfolio/portfolio.module.css";
 import { ResumeProvider } from "@/components/portfolio/resume-dialog";
 import { SocialLinks } from "@/components/portfolio/social-links";
 import { Button } from "@/components/ui/button";
-import type { Metadata } from "next";
 
 const title = "Portfolio | Louis Mau";
 const description =
