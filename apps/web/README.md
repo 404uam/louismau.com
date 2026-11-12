@@ -16,14 +16,14 @@ Open [http://localhost:3000](http://localhost:3000) with your browser.
 pnpm preview
 ```
 
-This runs the `preview` Wrangler environment with local KV storage. Test maintenance mode:
+This simulates the production Worker environment with Cloudflare KV access. Test maintenance mode:
 
 ```bash
-# Enable maintenance mode (local preview storage)
-pnpm wrangler kv key put --binding=SITE_CONFIG --env preview --local maintenance_mode true
+# Enable maintenance mode (preview namespace)
+pnpm wrangler kv key put --binding=SITE_CONFIG --preview maintenance_mode true
 
 # Disable (only an explicit false opens the site)
-pnpm wrangler kv key put --binding=SITE_CONFIG --env preview --local maintenance_mode false
+pnpm wrangler kv key put --binding=SITE_CONFIG --preview maintenance_mode false
 ```
 
 Open [http://localhost:8787](http://localhost:8787) (or the port shown in console).
@@ -67,16 +67,4 @@ Disable (production):
 pnpm wrangler kv key put --binding=SITE_CONFIG --remote maintenance_mode false
 ```
 
-For the local `pnpm preview` server, use `--env preview --local` as shown above. To change the deployed preview namespace, use `--env preview --remote`.
-
-## Cloudflare preview deployments
-
-`wrangler.jsonc` defines `env.preview` with a separate `SITE_CONFIG` namespace and `ENVIRONMENT=preview`. It clears the production routes and enables a workers.dev URL for `louismaudotcom-preview`.
-
-```bash
-pnpm deploy:preview
-```
-
-This builds and deploys with `--env preview` on both OpenNext commands. `pnpm deploy` continues to build and deploy production.
-
-For CI with separate build and deploy steps, use `pnpm cloudflare-build:preview` followed by `pnpm exec opennextjs-cloudflare deploy --env preview`. Configure those commands on the preview Worker's build settings; default production commands do not select the preview environment.
+For local `wrangler dev`, swap `--remote` for `--preview` to operate on the preview namespace.
