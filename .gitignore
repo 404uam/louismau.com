@@ -12,3 +12,9 @@ pnpm-debug.log*
 .air/
 
 .idea/
+.agents
+.claude
+.wrangler
+docs/
+.mcp.json
+.vscode
