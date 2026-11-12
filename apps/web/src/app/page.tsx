@@ -1,15 +1,15 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PortfolioNavigation } from "@/components/portfolio/navigation";
 import styles from "@/components/portfolio/portfolio.module.css";
 import { ResumeProvider } from "@/components/portfolio/resume-dialog";
 import { SocialLinks } from "@/components/portfolio/social-links";
 import { Button } from "@/components/ui/button";
-import { Metadata } from "next";
-
 
 const title = "Portfolio | Louis Mau";
-const description = "Portfolio for Louis Mau featuring photography and software engineering work.";
+const description =
+	"Portfolio for Louis Mau featuring photography and software engineering work.";
 export const metadata: Metadata = {
 	title,
 	description,
