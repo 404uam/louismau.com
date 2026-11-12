@@ -1,75 +1,74 @@
-import { ContactForm } from "@/app/components/ContactForm";
-import { Footer } from "@/app/components/Footer";
-import { Hero } from "@/app/components/Hero";
-import { Navigation } from "@/app/components/Navigation";
-import { PhotoGallery } from "@/app/components/PhotoGallery";
-import { Section, SectionHeader } from "@/app/components/Section";
-import { SoftwarePortfolio } from "@/app/components/SoftwarePortfolio";
+import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
+import { PortfolioNavigation } from "@/components/portfolio/navigation";
+import styles from "@/components/portfolio/portfolio.module.css";
+import { ResumeProvider } from "@/components/portfolio/resume-dialog";
+import { SocialLinks } from "@/components/portfolio/social-links";
 import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
+
+
+const title = "Portfolio | Louis Mau";
+const description = "Portfolio for Louis Mau featuring photography and software engineering work.";
+export const metadata: Metadata = {
+	title,
+	description,
+	openGraph: { title, description, type: "website" },
+	twitter: { card: "summary_large_image", title, description },
+};
+
 export default function Home() {
 	return (
-		<>
-			<Navigation />
-			<main>
-				<Hero />
-				<Section className="border-b border-slate-200 bg-slate-50 py-6">
-					<Button
-						asChild
-						variant="outline"
-						className="rounded-full border-cyan-500/60 px-5 py-2 text-sm font-semibold text-slate-900 hover:bg-cyan-500/10"
-					>
-						<a href="/admin">Admin Uploads</a>
-					</Button>
-				</Section>
-
-				<Section id="photos" className="bg-white py-20">
-					<SectionHeader
-						eyebrow="Photography"
-						title="Featured Work"
-						action={
+		<div className={`${styles.theme} ${styles.site} ${styles.entrySite}`}>
+			<a href="#main-content" className={styles.skipLink}>
+				Skip to content
+			</a>
+			<ResumeProvider>
+				<PortfolioNavigation
+					collapsible
+					projects={[]}
+					collections={[]}
+					footer={
+						<>
+							<SocialLinks />
+							<p className={styles.copyright}>
+								© {new Date().getFullYear()} Louis Mau
+							</p>
+						</>
+					}
+				/>
+				<div className={styles.entry}>
+					<header className={styles.entryHeader}>
+						<span className={styles.label}>Personal portfolio</span>
+						<span className={styles.label}>Software / Photography</span>
+					</header>
+					<main id="main-content" tabIndex={-1} className={styles.entryMain}>
+						<h1 className={styles.wordmark}>Louis Mau</h1>
+						<SocialLinks />
+						<nav aria-label="Choose a portfolio" className={styles.directions}>
+							<Button asChild className={styles.directionLink}>
+								<Link href="/software">
+									Software <ArrowUpRightIcon size={18} aria-hidden />
+								</Link>
+							</Button>
 							<Button
 								asChild
-								variant="link"
-								size="sm"
-								className="h-auto px-0 text-slate-800"
+								variant="outline"
+								className={styles.directionLink}
 							>
-								<a href="#top">Back to top</a>
+								<Link href="/photography">
+									Photography <ArrowUpRightIcon size={18} aria-hidden />
+								</Link>
 							</Button>
-						}
-					/>
-					<PhotoGallery />
-				</Section>
-
-				<Section
-					id="software"
-					className="border-y border-slate-200 bg-slate-50 py-20"
-				>
-					<SectionHeader
-						eyebrow="Software"
-						title="Selected Projects"
-						description="A snapshot of recent engineering work across product, platform, and tooling."
-					/>
-					<div className="mt-10">
-						<SoftwarePortfolio />
-					</div>
-				</Section>
-
-				<Section
-					id="contact"
-					className="bg-white py-20"
-					containerClassName="max-w-3xl"
-				>
-					<SectionHeader
-						eyebrow="Contact"
-						title="Let us build something meaningful."
-						description="Share a project idea, collaboration request, or photo inquiry."
-					/>
-					<div className="mt-8">
-						<ContactForm />
-					</div>
-				</Section>
-			</main>
-			<Footer />
-		</>
+						</nav>
+					</main>
+					<footer className={styles.entryFooter}>
+						<span className={styles.label}>
+							© {new Date().getFullYear()} Louis Mau
+						</span>
+					</footer>
+				</div>
+			</ResumeProvider>
+		</div>
 	);
 }

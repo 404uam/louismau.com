@@ -9,8 +9,11 @@
     "cloudflare-build": "next build && opennextjs-cloudflare build",
     "start": "next start",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "deploy:production": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "deploy:preview": "opennextjs-cloudflare build --env preview && opennextjs-cloudflare deploy --env preview",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "lint": "biome check",
+    "format": "biome format --write"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.17.1",
@@ -163,6 +166,11 @@
       "@modelcontextprotocol/sdk@<1.32.0": ">=1.32.0",
       "next@>=16.0.0 <16.2.6": ">=16.2.6",
       "minimatch@>=7.0.0 <11.0.1": ">=11.0.1"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "msw",
+      "workerd"
+    ]
   }
 }
