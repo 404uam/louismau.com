@@ -35,10 +35,21 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
     "shadcn": "^4.1.0",
     "tailwindcss": "^4.2.1",
     "typescript": "^5",
     "wrangler": "^4.158.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,css}": [
+      "biome check --write --unsafe --no-errors-on-unmatched",
+      "biome format --write --no-errors-on-unmatched",
+      "biome lint --write --no-errors-on-unmatched"
+    ],
+    "*": [
+      "biome check --no-errors-on-unmatched --files-ignore-unknown=true"
+    ]
   },
   "pnpm": {
     "overrides": {
