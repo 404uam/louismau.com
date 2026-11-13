@@ -1,6 +1,8 @@
 "use client";
 
+import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const weekdays = [
   "Sunday",
@@ -45,7 +47,7 @@ export default function Home() {
 
   const days = month
     ? Array.from(
-        { length: 42 },
+        { length: 35 },
         (_, index) =>
           new Date(
             month.getFullYear(),
@@ -77,28 +79,32 @@ export default function Home() {
             <h1 aria-live="polite">{monthLabel ?? "Calendar"}</h1>
           </div>
           <div className="calendar-controls">
-            <button type="button" className="today-button" onClick={goToToday}>
+            <Button variant="outline" size="lg" onPress={goToToday}>
               Today
-            </button>
+            </Button>
             <div className="month-controls">
-              <button
-                type="button"
-                aria-label="Previous month"
-                title="Previous month"
-                disabled={!month}
-                onClick={() => changeMonth(-1)}
-              >
-                &#8592;
-              </button>
-              <button
-                type="button"
-                aria-label="Next month"
-                title="Next month"
-                disabled={!month}
-                onClick={() => changeMonth(1)}
-              >
-                &#8594;
-              </button>
+              <span title="Previous month">
+                <Button
+                  variant="outline"
+                  size="icon-lg"
+                  aria-label="Previous month"
+                  isDisabled={!month}
+                  onPress={() => changeMonth(-1)}
+                >
+                  <RiArrowLeftSLine aria-hidden="true" />
+                </Button>
+              </span>
+              <span title="Next month">
+                <Button
+                  variant="outline"
+                  size="icon-lg"
+                  aria-label="Next month"
+                  isDisabled={!month}
+                  onPress={() => changeMonth(1)}
+                >
+                  <RiArrowRightSLine aria-hidden="true" />
+                </Button>
+              </span>
             </div>
           </div>
         </div>

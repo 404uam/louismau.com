@@ -1,33 +1,90 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #f5f6f3;
-  --foreground: #202b28;
-  --muted: #78827d;
-  --line: #e0e5e0;
-  --accent: #245c4b;
+  --muted: oklch(0.966 0.005 106.5);
+  --accent: oklch(0.966 0.005 106.5);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.153 0.006 107.1);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.153 0.006 107.1);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.153 0.006 107.1);
+  --primary: oklch(0.841 0.238 128.85);
+  --primary-foreground: oklch(0.405 0.101 131.063);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted-foreground: oklch(0.58 0.031 107.3);
+  --accent-foreground: oklch(0.228 0.013 107.4);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.93 0.007 106.5);
+  --input: oklch(0.93 0.007 106.5);
+  --ring: oklch(0.737 0.021 106.9);
+  --chart-1: oklch(0.897 0.196 126.665);
+  --chart-2: oklch(0.768 0.233 130.85);
+  --chart-3: oklch(0.648 0.2 131.684);
+  --chart-4: oklch(0.532 0.157 131.589);
+  --chart-5: oklch(0.453 0.124 130.933);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.988 0.003 106.5);
+  --sidebar-foreground: oklch(0.153 0.006 107.1);
+  --sidebar-primary: oklch(0.648 0.2 131.684);
+  --sidebar-primary-foreground: oklch(0.986 0.031 120.757);
+  --sidebar-accent: oklch(0.966 0.005 106.5);
+  --sidebar-accent-foreground: oklch(0.228 0.013 107.4);
+  --sidebar-border: oklch(0.93 0.007 106.5);
+  --sidebar-ring: oklch(0.737 0.021 106.9);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-heading);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
-}
-
-button {
-  cursor: pointer;
-}
-
-button:focus-visible {
-  outline: 2px solid #ae642e;
-  outline-offset: 3px;
+  font-family: var(--font-sans), sans-serif;
 }
 
 .calendar-app {
@@ -39,8 +96,8 @@ button:focus-visible {
   align-items: center;
   height: 68px;
   padding: 0 5%;
-  background: #fff;
-  border-bottom: 1px solid var(--line);
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
 }
 
 .brand {
@@ -57,9 +114,9 @@ button:focus-visible {
   height: 31px;
   place-items: center;
   border-radius: 6px;
-  background: var(--accent);
-  color: #fff;
-  font-family: Georgia, serif;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-family: var(--font-heading), serif;
   font-size: 20px;
 }
 
@@ -79,14 +136,14 @@ button:focus-visible {
 
 .section-label {
   margin: 0 0 8px;
-  color: var(--accent);
+  color: var(--muted-foreground);
   font-size: 10px;
   font-weight: 700;
 }
 
 .calendar-toolbar h1 {
   margin: 0;
-  font-family: Georgia, serif;
+  font-family: var(--font-heading), serif;
   font-size: 36px;
   font-weight: 400;
   line-height: 1.15;
@@ -102,45 +159,16 @@ button:focus-visible {
   gap: 12px;
 }
 
-.today-button,
-.month-controls button {
-  height: 38px;
-  border: 1px solid #d5ddd6;
-  background: #fff;
-  color: var(--foreground);
-}
-
-.today-button {
-  padding: 0 16px;
-  border-radius: 5px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.month-controls button {
-  width: 38px;
-  font-size: 19px;
-}
-
-.month-controls button:first-child {
-  border-radius: 5px 0 0 5px;
-}
-
-.month-controls button:last-child {
-  margin-left: -1px;
-  border-radius: 0 5px 5px 0;
-}
-
-.today-button:hover,
-.month-controls button:hover {
-  background: #edf3ee;
+.month-controls {
+  gap: 4px;
 }
 
 .calendar-table-wrap {
   overflow: hidden;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: 6px;
-  background: #fff;
+  background: var(--card);
+  color: var(--card-foreground);
 }
 
 .calendar-table {
@@ -152,8 +180,8 @@ button:focus-visible {
 .calendar-table th {
   height: 40px;
   padding: 0 12px;
-  border-bottom: 1px solid var(--line);
-  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted-foreground);
   font-size: 11px;
   font-weight: 600;
   text-align: left;
@@ -167,8 +195,8 @@ button:focus-visible {
 .calendar-table td {
   height: 100px;
   padding: 10px;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   vertical-align: top;
 }
 
@@ -190,14 +218,14 @@ button:focus-visible {
 }
 
 .calendar-table .outside-month {
-  background: #fafbf9;
-  color: #a7afaa;
+  background: var(--muted);
+  color: var(--muted-foreground);
 }
 
 .calendar-table [aria-current="date"] {
   border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
+  background: var(--primary);
+  color: var(--primary-foreground);
   font-weight: 700;
 }
 
@@ -218,10 +246,6 @@ button:focus-visible {
     gap: 6px;
   }
 
-  .today-button {
-    padding: 0 10px;
-  }
-
   .calendar-table th {
     padding: 0 4px;
     text-align: center;
@@ -234,5 +258,55 @@ button:focus-visible {
 
   .calendar-table time {
     margin: 0 auto;
+  }
+}
+
+.dark {
+  --background: oklch(0.153 0.006 107.1);
+  --foreground: oklch(0.988 0.003 106.5);
+  --card: oklch(0.228 0.013 107.4);
+  --card-foreground: oklch(0.988 0.003 106.5);
+  --popover: oklch(0.228 0.013 107.4);
+  --popover-foreground: oklch(0.988 0.003 106.5);
+  --primary: oklch(0.768 0.233 130.85);
+  --primary-foreground: oklch(0.405 0.101 131.063);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.286 0.016 107.4);
+  --muted-foreground: oklch(0.737 0.021 106.9);
+  --accent: oklch(0.286 0.016 107.4);
+  --accent-foreground: oklch(0.988 0.003 106.5);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.58 0.031 107.3);
+  --chart-1: oklch(0.897 0.196 126.665);
+  --chart-2: oklch(0.768 0.233 130.85);
+  --chart-3: oklch(0.648 0.2 131.684);
+  --chart-4: oklch(0.532 0.157 131.589);
+  --chart-5: oklch(0.453 0.124 130.933);
+  --sidebar: oklch(0.228 0.013 107.4);
+  --sidebar-foreground: oklch(0.988 0.003 106.5);
+  --sidebar-primary: oklch(0.768 0.233 130.85);
+  --sidebar-primary-foreground: oklch(0.274 0.072 132.109);
+  --sidebar-accent: oklch(0.286 0.016 107.4);
+  --sidebar-accent-foreground: oklch(0.988 0.003 106.5);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.58 0.031 107.3);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    @apply font-sans;
   }
 }
