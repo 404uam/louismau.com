@@ -5,8 +5,6 @@ const internalHost = process.env.TAURI_DEV_HOST || 'localhost';
 
 const nextConfig: NextConfig = {
   /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
   reactCompiler: true,
   turbopack: {
     rules: {
