@@ -86,4 +86,4 @@ function LinkButton({
   );
 }
 
-export { Button, LinkButton, buttonVariants };
+export { Button, buttonVariants, LinkButton };
