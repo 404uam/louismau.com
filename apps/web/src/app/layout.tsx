@@ -6,6 +6,7 @@ import {
 import type { ReactNode } from "react";
 import "./globals.css";
 import { SidebarProvider } from "@/components/portfolio/sidebar-state";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 import { cn } from "@/lib/utils";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -32,12 +33,20 @@ export default function RootLayout({
 		<html
 			lang="en"
 			data-scroll-behavior="smooth"
+			suppressHydrationWarning
 			className={cn("font-mono", jetbrainsMono.variable)}
 		>
 			<body
 				className={`${instrumentSans.variable} ${sourceCodePro.variable} antialiased`}
 			>
-				<SidebarProvider>{children}</SidebarProvider>
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+				>
+					<SidebarProvider>{children}</SidebarProvider>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
