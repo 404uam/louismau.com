@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Calendar } from "@/components/calendar/calendar";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function Home() {
   const [storageStatus, setStorageStatus] = useState<
@@ -34,7 +35,11 @@ export default function Home() {
 
   if (storageStatus === "checking") {
     return (
-      <main className="flex min-h-svh items-center justify-center p-6">
+      <main
+        aria-busy="true"
+        className="flex min-h-svh items-center justify-center gap-3 p-6"
+      >
+        <Spinner aria-hidden="true" className="size-5 text-muted-foreground" />
         <p role="status">Checking calendar storage...</p>
       </main>
     );
