@@ -4,7 +4,7 @@ export type CalendarView = (typeof views)[number];
 type ViewRules = {
   anchor: "month" | "week" | "day";
   navigation: { unit: "month" | "day"; amount: number };
-  range: { start: "week" | "anchor"; length: number };
+  range: { start: "week" | "anchor"; length: number | "month" };
   layout: "month" | "time";
   heading: string;
   label: string;
@@ -15,7 +15,7 @@ export const viewRules = {
   month: {
     anchor: "month",
     navigation: { unit: "month", amount: 1 },
-    range: { start: "week", length: 35 },
+    range: { start: "week", length: "month" },
     layout: "month",
     heading: "MONTHLY",
     label: "Month",
@@ -89,7 +89,7 @@ export function advanceViewDate(
 }
 
 export function getViewDays(view: CalendarView, anchorDate: Date): Date[] {
-  const { start, length } = viewRules[view].range;
+  const { start, length: rangeLength } = viewRules[view].range;
   let firstDay: Date;
   switch (start) {
     case "week":
@@ -99,6 +99,15 @@ export function getViewDays(view: CalendarView, anchorDate: Date): Date[] {
       firstDay = anchorDate;
       break;
   }
+  const lastDayOfMonth = new Date(
+    anchorDate.getFullYear(),
+    anchorDate.getMonth() + 1,
+    0,
+  );
+  const length =
+    rangeLength === "month"
+      ? Math.ceil((lastDayOfMonth.getDate() + anchorDate.getDay()) / 7) * 7
+      : rangeLength;
   return Array.from(
     { length },
     (_, index) =>

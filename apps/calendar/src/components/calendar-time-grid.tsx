@@ -8,8 +8,7 @@ function hourLabel(hour: number) {
   return `${hour % 12 || 12} ${hour % 24 < 12 ? "AM" : "PM"}`;
 }
 
-function initialHour() {
-  const now = new Date();
+function initialHour(now: Date) {
   return Math.max(0, now.getHours() + now.getMinutes() / 60 - 4);
 }
 
@@ -34,7 +33,7 @@ export function CalendarTimeGrid({
     const scroller = scrollRef.current;
     if (!root || !scroller) return;
 
-    topHour.current = initialHour();
+    topHour.current = initialHour(now);
     function measure() {
       if (!root || !scroller || scroller.clientHeight === 0) return;
       const height = scroller.clientHeight / 8;
@@ -60,7 +59,7 @@ export function CalendarTimeGrid({
     void scrollReset;
     const scroller = scrollRef.current;
     if (scroller && hourHeight.current) {
-      scroller.scrollTop = initialHour() * hourHeight.current;
+      scroller.scrollTop = initialHour(now) * hourHeight.current;
       topHour.current = scroller.scrollTop / hourHeight.current;
     }
   }, [scrollReset]);
