@@ -1,4 +1,4 @@
-import { ViewRules } from "@/types/viewRules";
+import type { ViewRules } from "@/types/viewRules";
 
 export const views = ["month", "week", "3-day", "day"] as const;
 export type CalendarView = (typeof views)[number];

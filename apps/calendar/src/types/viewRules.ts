@@ -1,4 +1,3 @@
-
 export type ViewRules = {
   anchor: "month" | "week" | "day";
   navigation: { unit: "month" | "day"; amount: number };
