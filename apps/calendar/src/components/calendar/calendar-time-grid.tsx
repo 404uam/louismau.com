@@ -1,7 +1,7 @@
 "use client";
 
 import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
-import { CalendarItemView } from "@/components/calendar/calendar-item-view";
+import { CalendarItemView } from "@/components/calendar/items/calendar-item-view";
 import type { CalendarDay } from "@/lib/calendar/calendar-projection";
 import type { Event } from "@/types/calendar-item";
 
