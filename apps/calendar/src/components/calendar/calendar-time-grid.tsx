@@ -1,14 +1,9 @@
 "use client";
 
-import {
-  type CSSProperties,
-  type ReactNode,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
+import { CalendarItemView } from "@/components/calendar/calendar-item-view";
 import type { CalendarDay } from "@/lib/calendar/calendar-projection";
-import type { CalendarItem, Event } from "@/types/calendar-item";
+import type { Event } from "@/types/calendar-item";
 
 const hours = Array.from({ length: 25 }, (_, hour) => hour);
 
@@ -81,13 +76,11 @@ export function CalendarTimeGrid({
   now,
   scrollReset,
   label,
-  renderItem,
 }: {
   days: CalendarDay[];
   now: Date;
   scrollReset: number;
   label: string;
-  renderItem: (item: CalendarItem, layout?: "row" | "block") => ReactNode;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLElement>(null);
@@ -180,8 +173,12 @@ export function CalendarTimeGrid({
             </time>
             {allDayEvents.length || tasks.length ? (
               <div className="calendar-header-items">
-                {allDayEvents.map((item) => renderItem(item))}
-                {tasks.map((item) => renderItem(item))}
+                {allDayEvents.map((item) => (
+                  <CalendarItemView key={item.id} item={item} />
+                ))}
+                {tasks.map((item) => (
+                  <CalendarItemView key={item.id} item={item} />
+                ))}
               </div>
             ) : null}
           </div>
@@ -243,7 +240,7 @@ export function CalendarTimeGrid({
                       width: `calc(${100 / columns}% - 4px)`,
                     }}
                   >
-                    {renderItem(item, "block")}
+                    <CalendarItemView item={item} layout="block" />
                   </div>
                 ),
               )}

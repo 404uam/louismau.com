@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Calendar } from "@/components/calendar";
+import { Calendar } from "@/components/calendar/calendar";
 
 export default function Home() {
   const [storageStatus, setStorageStatus] = useState<
