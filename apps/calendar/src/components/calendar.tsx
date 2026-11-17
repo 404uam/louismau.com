@@ -118,7 +118,7 @@ export function Calendar() {
       ? monthLabel
       : days.length
         ? new Intl.DateTimeFormat("en-US", {
-            month: "short",
+            month: "long",
             day: "numeric",
             year: "numeric",
           }).formatRange(days[0], days[days.length - 1])
@@ -129,15 +129,6 @@ export function Calendar() {
     <main
       className={cn("calendar-app", view !== "month" && "calendar-app-time")}
     >
-      <header className="app-header">
-        <div className="brand">
-          <span className="brand-mark" aria-hidden="true">
-            C
-          </span>
-          <span>Calendar</span>
-        </div>
-      </header>
-
       <section className="calendar-content" aria-label="Calendar">
         <div className="calendar-toolbar">
           <div>
