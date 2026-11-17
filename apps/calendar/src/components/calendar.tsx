@@ -5,20 +5,16 @@ import { useEffect, useState } from "react";
 import { CalendarTimeGrid } from "@/components/calendar-time-grid";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  advanceViewDate,
+  anchorViewDate,
+  type CalendarView,
+  formatViewLabel,
+  getViewDays,
+  viewRules,
+  views,
+} from "@/lib/calendar-view";
 import { cn } from "@/lib/utils";
-
-const views = ["month", "week", "3-day", "day"] as const;
-type CalendarView = (typeof views)[number];
-
-function viewAnchor(view: CalendarView, date: Date) {
-  return new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    view === "month"
-      ? 1
-      : date.getDate() - (view === "week" ? date.getDay() : 0),
-  );
-}
 
 const weekdays = [
   "Sunday",
@@ -39,14 +35,14 @@ function dateKey(date: Date) {
 
 export function Calendar() {
   const [today, setToday] = useState<Date | null>(null);
-  const [month, setMonth] = useState<Date | null>(null);
+  const [anchorDate, setAnchorDate] = useState<Date | null>(null);
   const [view, setView] = useState<CalendarView>("month");
   const [scrollReset, setScrollReset] = useState(0);
 
   useEffect(() => {
     const now = new Date();
     setToday(now);
-    setMonth(new Date(now.getFullYear(), now.getMonth(), 1));
+    setAnchorDate(anchorViewDate("month", now));
     const refreshClock = () => setToday(new Date());
     const interval = window.setInterval(refreshClock, 60_000);
     const onVisibilityChange = () => {
@@ -59,25 +55,16 @@ export function Calendar() {
     };
   }, []);
 
-  function changeMonth(offset: number) {
-    setMonth((current) =>
-      current
-        ? view === "month"
-          ? new Date(current.getFullYear(), current.getMonth() + offset, 1)
-          : new Date(
-              current.getFullYear(),
-              current.getMonth(),
-              current.getDate() +
-                offset * (view === "week" ? 7 : view === "3-day" ? 3 : 1),
-            )
-        : current,
+  function navigate(offset: number) {
+    setAnchorDate((current) =>
+      current ? advanceViewDate(view, current, offset) : current,
     );
   }
 
   function goToToday() {
     const now = new Date();
     setToday(now);
-    setMonth(viewAnchor(view, now));
+    setAnchorDate(anchorViewDate(view, now));
     setScrollReset((current) => current + 1);
   }
 
@@ -86,55 +73,31 @@ export function Calendar() {
     const now = new Date();
     setToday(now);
     setView(next);
-    setMonth(viewAnchor(next, now));
+    setAnchorDate(anchorViewDate(next, now));
   }
 
-  const days = month
-    ? Array.from(
-        {
-          length:
-            view === "month"
-              ? 35
-              : view === "week"
-                ? 7
-                : view === "3-day"
-                  ? 3
-                  : 1,
-        },
-        (_, index) =>
-          new Date(
-            month.getFullYear(),
-            month.getMonth(),
-            (view === "month" ? 1 - month.getDay() : month.getDate()) + index,
-          ),
-      )
-    : [];
-  const monthLabel = month?.toLocaleDateString("en-US", {
+  const rules = viewRules[view];
+  const days = anchorDate ? getViewDays(view, anchorDate) : [];
+  const monthLabel = anchorDate?.toLocaleDateString("en-US", {
     month: "long",
     year: "numeric",
   });
-  const rangeLabel =
-    view === "month"
-      ? monthLabel
-      : days.length
-        ? new Intl.DateTimeFormat("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          }).formatRange(days[0], days[days.length - 1])
-        : undefined;
-  const navigationUnit = view === "3-day" ? "3 days" : view;
+  const rangeLabel = anchorDate
+    ? formatViewLabel(view, anchorDate, days)
+    : undefined;
+  const { navigationUnit } = rules;
 
   return (
     <main
-      className={cn("calendar-app", view !== "month" && "calendar-app-time")}
+      className={cn(
+        "calendar-app",
+        rules.layout === "time" && "calendar-app-time",
+      )}
     >
       <section className="calendar-content" aria-label="Calendar">
         <div className="calendar-toolbar">
           <div>
-            <p className="section-label">
-              {view === "month" ? "MONTHLY" : view.toUpperCase()} VIEW
-            </p>
+            <p className="section-label">{rules.heading} VIEW</p>
             <h1 aria-live="polite">{rangeLabel ?? "Calendar"}</h1>
           </div>
           <div className="calendar-controls">
@@ -150,13 +113,11 @@ export function Calendar() {
               variant="outline"
               size="lg"
               spacing={0}
-              isDisabled={!month}
+              isDisabled={!anchorDate}
             >
               {views.map((value) => (
                 <ToggleGroupItem key={value} id={value}>
-                  {value === "3-day"
-                    ? "3-day"
-                    : value[0].toUpperCase() + value.slice(1)}
+                  {viewRules[value].label}
                 </ToggleGroupItem>
               ))}
             </ToggleGroup>
@@ -169,8 +130,8 @@ export function Calendar() {
                   variant="outline"
                   size="icon-lg"
                   aria-label={`Previous ${navigationUnit}`}
-                  isDisabled={!month}
-                  onPress={() => changeMonth(-1)}
+                  isDisabled={!anchorDate}
+                  onPress={() => navigate(-1)}
                 >
                   <RiArrowLeftSLine aria-hidden="true" />
                 </Button>
@@ -180,8 +141,8 @@ export function Calendar() {
                   variant="outline"
                   size="icon-lg"
                   aria-label={`Next ${navigationUnit}`}
-                  isDisabled={!month}
-                  onPress={() => changeMonth(1)}
+                  isDisabled={!anchorDate}
+                  onPress={() => navigate(1)}
                 >
                   <RiArrowRightSLine aria-hidden="true" />
                 </Button>
@@ -190,7 +151,7 @@ export function Calendar() {
           </div>
         </div>
 
-        {view !== "month" && today ? (
+        {rules.layout === "time" && today ? (
           <CalendarTimeGrid
             days={days.map((date) => ({ date, key: dateKey(date) }))}
             now={today}
@@ -226,7 +187,7 @@ export function Calendar() {
                           <td
                             key={key}
                             className={
-                              date.getMonth() !== month?.getMonth()
+                              date.getMonth() !== anchorDate?.getMonth()
                                 ? "outside-month"
                                 : undefined
                             }
