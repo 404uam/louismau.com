@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Calendar",
-  description: "A monthly calendar.",
+  description: "A calendar with month, week, three-day, and day views.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

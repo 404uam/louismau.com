@@ -1,5 +1,21 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Calendar views
+
+The calendar opens in Month view. Use the view selector for Week (Sunday to
+Saturday), 3-day, or Day. Switching views anchors the dates to today; Previous
+and Next move by the selected view's range. Today returns to the current range.
+
+Time views show an empty midnight-to-midnight grid with AM/PM labels and roughly
+eight hours visible. The hours scroll together below fixed day headers. Scrolling
+starts four hours before the current time, bounded by the day's limits; Today
+and returning from Month reset this position. Date navigation and direct switches
+between time views preserve the visible hour. A live line marks the current time
+in today's column. Dates and times use the device's local time.
+
+These views do not yet display events or tasks. The existing IndexedDB startup
+requirement remains in place.
+
 ## Getting Started
 
 First, run the development server:

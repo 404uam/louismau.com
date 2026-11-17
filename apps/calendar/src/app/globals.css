@@ -89,8 +89,10 @@ body {
 
 .calendar-app {
   display: flex;
-  min-height: 100svh;
+  height: 100dvh;
+  min-height: 0;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .app-header {
@@ -127,14 +129,16 @@ body {
   display: flex;
   width: 100%;
   max-width: 1440px;
+  min-height: 0;
   flex: 1;
   flex-direction: column;
   margin: 0 auto;
-  padding: 54px 5% 60px;
+  padding: clamp(12px, 4vh, 54px) 5% clamp(12px, 4vh, 60px);
 }
 
 .calendar-toolbar {
   display: flex;
+  flex-shrink: 0;
   align-items: end;
   justify-content: space-between;
   gap: 20px;
@@ -173,8 +177,9 @@ body {
 .calendar-table-wrap {
   display: flex;
   flex: 1;
+  min-height: 0;
   flex-direction: column;
-  overflow: hidden;
+  overflow: auto;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--card);
@@ -240,13 +245,147 @@ body {
   font-weight: 700;
 }
 
+.calendar-toolbar,
+.calendar-controls {
+  flex-wrap: wrap;
+}
+
+.calendar-toolbar > div:first-child {
+  min-width: 0;
+}
+
+.calendar-time-grid {
+  --hour-height: 64px;
+  --hour-gutter: 58px;
+  --scrollbar-width: 0px;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  color: var(--card-foreground);
+}
+
+.calendar-time-headers,
+.calendar-time-body {
+  display: grid;
+  grid-template-columns: var(--hour-gutter) repeat(
+      var(--day-count),
+      minmax(0, 1fr)
+    );
+}
+
+.calendar-time-headers {
+  flex-shrink: 0;
+  padding-right: var(--scrollbar-width);
+  border-bottom: 1px solid var(--border);
+}
+
+.calendar-time-zone {
+  align-self: center;
+  text-align: center;
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+
+.calendar-time-day-header {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+  border-left: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+
+.calendar-time-day-header time {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  place-items: center;
+  color: var(--card-foreground);
+  font-size: 13px;
+}
+
+.calendar-time-day-header [aria-current="date"] {
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 700;
+}
+
+.calendar-time-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+
+.calendar-time-scroll:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+
+.calendar-time-body {
+  height: calc(var(--hour-height) * 24);
+}
+
+.calendar-time-gutter,
+.calendar-time-day {
+  position: relative;
+  min-width: 0;
+}
+
+.calendar-time-day {
+  border-left: 1px solid var(--border);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--border) 0,
+    var(--border) 1px,
+    transparent 1px,
+    transparent var(--hour-height)
+  );
+}
+
+.calendar-hour-label {
+  position: absolute;
+  right: 8px;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.calendar-hour-label:first-child {
+  transform: none;
+}
+
+.calendar-hour-label:last-child {
+  transform: translateY(-100%);
+}
+
+.calendar-current-time {
+  position: absolute;
+  right: 0;
+  left: 0;
+  border-top: 2px solid var(--primary);
+  pointer-events: none;
+}
+
 @media (max-width: 600px) {
-  .app-header {
-    height: 60px;
+  .calendar-time-grid {
+    --hour-gutter: 48px;
   }
 
-  .calendar-content {
-    padding-top: 36px;
+  .app-header {
+    height: 60px;
   }
 
   .calendar-toolbar h1 {
