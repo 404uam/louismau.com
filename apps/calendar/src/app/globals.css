@@ -245,6 +245,101 @@ body {
   font-weight: 700;
 }
 
+.calendar-notice {
+  margin: 0 0 12px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.calendar-notice[role="alert"] {
+  color: var(--destructive);
+}
+
+.calendar-month-items,
+.calendar-header-items {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.calendar-month-items {
+  margin-top: 4px;
+}
+
+.calendar-header-items {
+  width: 100%;
+  max-height: 120px;
+  overflow-y: auto;
+  padding: 2px 4px;
+}
+
+.calendar-item-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-item-time {
+  flex-shrink: 0;
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--muted-foreground);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-size="calendar-row"] .calendar-item-time {
+  max-width: 45%;
+}
+
+.calendar-task-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+.calendar-more {
+  max-width: 100%;
+  justify-content: flex-start;
+}
+
+.calendar-popover {
+  width: min(320px, calc(100vw - 24px));
+  max-height: min(360px, calc(100vh - 24px));
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--popover);
+  color: var(--popover-foreground);
+  box-shadow: 0 8px 24px oklch(0 0 0 / 15%);
+}
+
+.calendar-popover-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  outline: none;
+}
+
+.calendar-popover-content p {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+
+.calendar-popover-title {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .calendar-toolbar,
 .calendar-controls {
   flex-wrap: wrap;
@@ -327,6 +422,13 @@ body {
   overscroll-behavior-y: contain;
 }
 
+.calendar-time-notice {
+  margin: 0;
+  padding: 6px 12px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
 .calendar-time-scroll:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: -2px;
@@ -351,6 +453,15 @@ body {
     transparent 1px,
     transparent var(--hour-height)
   );
+}
+
+.calendar-timed-event {
+  position: absolute;
+  min-width: 0;
+}
+
+.calendar-timed-event:focus-within {
+  z-index: 1;
 }
 
 .calendar-hour-label {

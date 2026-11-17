@@ -25,6 +25,9 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
+        "calendar-event":
+          "border-l-2 border-l-primary bg-primary/15 text-foreground hover:bg-primary/25",
+        "calendar-task": "bg-transparent text-foreground hover:bg-muted",
       },
       size: {
         default:
@@ -36,6 +39,10 @@ const buttonVariants = cva(
         "icon-xs": "size-5 rounded-sm [&_svg:not([class*='size-'])]:size-2.5",
         "icon-sm": "size-6 [&_svg:not([class*='size-'])]:size-3",
         "icon-lg": "size-8 [&_svg:not([class*='size-'])]:size-4",
+        "calendar-row":
+          "h-auto min-h-5 w-full justify-start gap-1 overflow-hidden px-1 text-left text-xs/relaxed",
+        "calendar-block":
+          "h-full min-h-5 w-full flex-col items-start justify-start gap-0 overflow-hidden whitespace-normal px-1 text-left text-xs/relaxed",
       },
     },
     defaultVariants: {

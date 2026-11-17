@@ -1,10 +1,16 @@
 "use client";
 
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
-import { useEffect, useState } from "react";
+import { useLiveQuery } from "dexie-react-hooks";
+import { useEffect, useMemo, useState } from "react";
+import { Dialog, DialogTrigger, Heading, Popover } from "react-aria-components";
 import { CalendarTimeGrid } from "@/components/calendar-time-grid";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  dateKey,
+  projectCalendarItems,
+} from "@/lib/calendar/calendar-projection";
 import {
   advanceViewDate,
   anchorViewDate,
@@ -13,8 +19,10 @@ import {
   getViewDays,
   viewRules,
   views,
-} from "@/lib/calendar-view";
+} from "@/lib/calendar/calendar-view";
+import { db } from "@/lib/db";
 import { cn } from "@/lib/utils";
+import type { CalendarItem, Event, Task } from "@/types/calendar-item";
 
 const weekdays = [
   "Sunday",
@@ -26,11 +34,28 @@ const weekdays = [
   "Saturday",
 ];
 
-function dateKey(date: Date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+const emptyItems: CalendarItem[] = [];
+const monthItemLimit = 2;
+
+function eventTime(event: Event, date: Date): string {
+  const timeZone = event.timeZone ?? event.creationTimeZone;
+  const viewerTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const showTimeZone =
+    timeZone !== viewerTimeZone ||
+    event.startAt.getTimezoneOffset() !== event.endAt.getTimezoneOffset();
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone,
+    ...(showTimeZone && { timeZoneName: "short" }),
+  }).format(date);
+}
+
+function eventDate(event: Event, date: Date): string {
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeZone: event.timeZone ?? event.creationTimeZone,
+  }).format(date);
 }
 
 export function Calendar() {
@@ -38,6 +63,17 @@ export function Calendar() {
   const [anchorDate, setAnchorDate] = useState<Date | null>(null);
   const [view, setView] = useState<CalendarView>("month");
   const [scrollReset, setScrollReset] = useState(0);
+  const query = useLiveQuery(async () => {
+    try {
+      return {
+        status: "ready" as const,
+        items: await db.calendarItems.toArray(),
+      };
+    } catch (error) {
+      console.error("Could not load calendar items:", error);
+      return { status: "error" as const };
+    }
+  }, []);
 
   useEffect(() => {
     const now = new Date();
@@ -77,7 +113,15 @@ export function Calendar() {
   }
 
   const rules = viewRules[view];
-  const days = anchorDate ? getViewDays(view, anchorDate) : [];
+  const days = useMemo(
+    () => (anchorDate ? getViewDays(view, anchorDate) : []),
+    [view, anchorDate],
+  );
+  const items = query?.status === "ready" ? query.items : emptyItems;
+  const projectedDays = useMemo(
+    () => projectCalendarItems(items, days),
+    [items, days],
+  );
   const monthLabel = anchorDate?.toLocaleDateString("en-US", {
     month: "long",
     year: "numeric",
@@ -86,6 +130,115 @@ export function Calendar() {
     ? formatViewLabel(view, anchorDate, days)
     : undefined;
   const { navigationUnit } = rules;
+
+  function renderItem(item: CalendarItem, layout: "row" | "block" = "row") {
+    function renderEvent(event: Event) {
+      const timeLabel = event.allDay
+        ? "All day"
+        : eventTime(event, event.startAt);
+
+      return {
+        variant: "calendar-event" as const,
+        accessibleLabel: [event.title, "Event", timeLabel]
+          .filter(Boolean)
+          .join(", "),
+        typeLabel: "Event",
+        content: (
+          <>
+            {layout === "row" ? (
+              <span className="calendar-item-time">{timeLabel}</span>
+            ) : null}
+            <span className="calendar-item-title">{event.title}</span>
+            {layout === "block" ? (
+              <span className="calendar-item-time">
+                {eventTime(event, event.startAt)} –{" "}
+                {eventTime(event, event.endAt)}
+              </span>
+            ) : null}
+          </>
+        ),
+        details: (
+          <p>
+            {event.allDay
+              ? `All day · ${eventDate(event, event.startAt)}${
+                  eventDate(event, event.startAt) ===
+                  eventDate(event, event.endAt)
+                    ? ""
+                    : ` – ${eventDate(event, event.endAt)}`
+                }`
+              : `${eventDate(event, event.startAt)}, ${eventTime(event, event.startAt)} – ${eventDate(event, event.endAt)}, ${eventTime(event, event.endAt)}`}
+          </p>
+        ),
+      };
+    }
+
+    function renderTask(task: Task) {
+      const completed = Boolean(task.completedAt);
+      return {
+        variant: "calendar-task" as const,
+        accessibleLabel: [
+          task.title,
+          "Task",
+          completed ? "Completed" : undefined,
+        ]
+          .filter(Boolean)
+          .join(", "),
+        typeLabel: completed ? "Completed task" : "Task",
+        content: (
+          <>
+            <span className="calendar-task-dot" aria-hidden="true" />
+            <span
+              className={cn("calendar-item-title", completed && "line-through")}
+            >
+              {task.title}
+            </span>
+          </>
+        ),
+        details: (
+          <p>
+            Starts{" "}
+            {task.startAt.toLocaleString("en-US", {
+              dateStyle: "medium",
+              timeStyle: "short",
+            })}
+          </p>
+        ),
+      };
+    }
+
+    const { variant, accessibleLabel, typeLabel, content, details } =
+      item.type === "event" ? renderEvent(item) : renderTask(item);
+
+    return (
+      <DialogTrigger key={item.id}>
+        <Button
+          variant={variant}
+          size={layout === "block" ? "calendar-block" : "calendar-row"}
+          aria-label={accessibleLabel}
+        >
+          {content}
+        </Button>
+        <Popover className="calendar-popover">
+          <Dialog className="calendar-popover-content">
+            {({ close }) => (
+              <>
+                <Heading slot="title" className="calendar-popover-title">
+                  {item.title}
+                </Heading>
+                <p>{typeLabel}</p>
+                {details}
+                {item.description ? <p>{item.description}</p> : null}
+                {item.location ? <p>{item.location}</p> : null}
+                <Button variant="outline" size="sm" onPress={close}>
+                  Close
+                </Button>
+              </>
+            )}
+          </Dialog>
+        </Popover>
+      </DialogTrigger>
+    );
+  }
 
   return (
     <main
@@ -151,12 +304,27 @@ export function Calendar() {
           </div>
         </div>
 
+        {!query ? (
+          <p role="status" className="calendar-notice">
+            Loading calendar items...
+          </p>
+        ) : query.status === "error" ? (
+          <p role="alert" className="calendar-notice">
+            Calendar items could not be loaded. Please reload and try again.
+          </p>
+        ) : items.some((item) => item.recurrence) ? (
+          <p role="status" className="calendar-notice">
+            Recurring items are not shown yet.
+          </p>
+        ) : null}
+
         {rules.layout === "time" && today ? (
           <CalendarTimeGrid
-            days={days.map((date) => ({ date, key: dateKey(date) }))}
+            days={projectedDays}
             now={today}
             scrollReset={scrollReset}
             label={rangeLabel ?? "Calendar"}
+            renderItem={renderItem}
           />
         ) : (
           <div className="calendar-table-wrap">
@@ -175,38 +343,89 @@ export function Calendar() {
               </thead>
               <tbody>
                 {Array.from({ length: 6 }, (_, week) =>
-                  days.slice(week * 7, week * 7 + 7),
+                  projectedDays.slice(week * 7, week * 7 + 7),
                 )
                   .filter((week) => week.length > 0)
                   .map((week) => (
-                    <tr key={dateKey(week[0])}>
-                      {week.map((date) => {
-                        const key = dateKey(date);
-                        const isToday = today && key === dateKey(today);
-                        return (
-                          <td
-                            key={key}
-                            className={
-                              date.getMonth() !== anchorDate?.getMonth()
-                                ? "outside-month"
-                                : undefined
-                            }
-                          >
-                            <time
-                              dateTime={key}
-                              title={date.toLocaleDateString("en-US", {
-                                weekday: "long",
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              })}
-                              aria-current={isToday ? "date" : undefined}
+                    <tr key={week[0].key}>
+                      {week.map(
+                        ({ date, key, allDayEvents, timedEvents, tasks }) => {
+                          const isToday = today && key === dateKey(today);
+                          const dayItems = [
+                            ...allDayEvents,
+                            ...timedEvents,
+                            ...tasks,
+                          ];
+                          const hiddenItems = dayItems.slice(monthItemLimit);
+                          return (
+                            <td
+                              key={key}
+                              className={
+                                date.getMonth() !== anchorDate?.getMonth()
+                                  ? "outside-month"
+                                  : undefined
+                              }
                             >
-                              {date.getDate()}
-                            </time>
-                          </td>
-                        );
-                      })}
+                              <time
+                                dateTime={key}
+                                title={date.toLocaleDateString("en-US", {
+                                  weekday: "long",
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })}
+                                aria-current={isToday ? "date" : undefined}
+                              >
+                                {date.getDate()}
+                              </time>
+                              <div className="calendar-month-items">
+                                {dayItems
+                                  .slice(0, monthItemLimit)
+                                  .map((item) => renderItem(item))}
+                                {hiddenItems.length > 0 ? (
+                                  <DialogTrigger>
+                                    <Button
+                                      variant="ghost"
+                                      size="xs"
+                                      className="calendar-more"
+                                      aria-label={`${hiddenItems.length} more items for ${date.toLocaleDateString("en-US", { dateStyle: "full" })}`}
+                                    >
+                                      +{hiddenItems.length} more
+                                    </Button>
+                                    <Popover className="calendar-popover">
+                                      <Dialog className="calendar-popover-content">
+                                        {({ close }) => (
+                                          <>
+                                            <Heading
+                                              slot="title"
+                                              className="calendar-popover-title"
+                                            >
+                                              {date.toLocaleDateString(
+                                                "en-US",
+                                                { dateStyle: "full" },
+                                              )}
+                                            </Heading>
+                                            {hiddenItems.map((item) =>
+                                              renderItem(item),
+                                            )}
+                                            <Button
+                                              variant="outline"
+                                              size="sm"
+                                              onPress={close}
+                                            >
+                                              Close
+                                            </Button>
+                                          </>
+                                        )}
+                                      </Dialog>
+                                    </Popover>
+                                  </DialogTrigger>
+                                ) : null}
+                              </div>
+                            </td>
+                          );
+                        },
+                      )}
                     </tr>
                   ))}
               </tbody>
