@@ -52,7 +52,7 @@ export function CalendarTimeGrid({
     const observer = new ResizeObserver(measure);
     observer.observe(scroller);
     return () => observer.disconnect();
-  }, []);
+  }, [now]);
 
   useLayoutEffect(() => {
     // Only Today explicitly resets an already mounted time grid.
@@ -62,7 +62,7 @@ export function CalendarTimeGrid({
       scroller.scrollTop = initialHour(now) * hourHeight.current;
       topHour.current = scroller.scrollTop / hourHeight.current;
     }
-  }, [scrollReset]);
+  }, [scrollReset, now]);
 
   const currentHour = now.getHours() + now.getMinutes() / 60;
 
