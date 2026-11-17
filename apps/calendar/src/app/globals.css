@@ -88,12 +88,15 @@ body {
 }
 
 .calendar-app {
-  min-height: 100vh;
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
 }
 
 .app-header {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   height: 68px;
   padding: 0 5%;
   background: var(--background);
@@ -121,7 +124,11 @@ body {
 }
 
 .calendar-content {
+  display: flex;
+  width: 100%;
   max-width: 1440px;
+  flex: 1;
+  flex-direction: column;
   margin: 0 auto;
   padding: 54px 5% 60px;
 }
@@ -164,6 +171,9 @@ body {
 }
 
 .calendar-table-wrap {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -173,6 +183,7 @@ body {
 
 .calendar-table {
   width: 100%;
+  flex: 1;
   table-layout: fixed;
   border-collapse: collapse;
 }
