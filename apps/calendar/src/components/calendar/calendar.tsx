@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CalendarMonthView } from "@/components/calendar/calendar-month-view";
 import { CalendarTimeGrid } from "@/components/calendar/calendar-time-grid";
 import { CalendarToolbar } from "@/components/calendar/calendar-toolbar";
+import { CalendarItemSheet } from "@/components/calendar/items/create-calendar-form";
 import { projectCalendarItems } from "@/lib/calendar/calendar-projection";
 import {
   advanceViewDate,
@@ -25,6 +26,7 @@ export function Calendar() {
   const [anchorDate, setAnchorDate] = useState<Date | null>(null);
   const [view, setView] = useState<CalendarView>("month");
   const [scrollReset, setScrollReset] = useState(0);
+  const [isCreating, setIsCreating] = useState(false);
   const query = useLiveQuery(async () => {
     try {
       return {
@@ -103,6 +105,7 @@ export function Calendar() {
           onChangeView={changeView}
           onToday={goToToday}
           onNavigate={navigate}
+          onNew={() => setIsCreating(true)}
         />
 
         {!query ? (
@@ -134,6 +137,7 @@ export function Calendar() {
           />
         )}
       </section>
+      <CalendarItemSheet isOpen={isCreating} onOpenChange={setIsCreating} />
     </main>
   );
 }

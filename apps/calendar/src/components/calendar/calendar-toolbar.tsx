@@ -1,6 +1,8 @@
 "use client";
 
+import { AnimateIcon } from "@animate-ui/react/icons";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
+import { CalendarPlus } from "@/components/animate-ui/icons/calendar-plus";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
@@ -16,6 +18,7 @@ export function CalendarToolbar({
   onChangeView,
   onToday,
   onNavigate,
+  onNew,
 }: {
   view: CalendarView;
   rangeLabel: string | undefined;
@@ -23,6 +26,7 @@ export function CalendarToolbar({
   onChangeView: (view: CalendarView) => void;
   onToday: () => void;
   onNavigate: (offset: number) => void;
+  onNew: () => void;
 }) {
   const { heading, navigationUnit } = viewRules[view];
 
@@ -33,6 +37,12 @@ export function CalendarToolbar({
         <h1 aria-live="polite">{rangeLabel ?? "Calendar"}</h1>
       </div>
       <div className="calendar-controls">
+        <AnimateIcon animateOnHover animateOnTap className="inline-flex">
+          <Button size="lg" onPress={onNew}>
+            <CalendarPlus aria-hidden="true" />
+            New Item
+          </Button>
+        </AnimateIcon>
         <ToggleGroup
           aria-label="Calendar view"
           selectionMode="single"
