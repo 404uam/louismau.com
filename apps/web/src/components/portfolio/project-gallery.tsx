@@ -1,6 +1,11 @@
-import { ArrowUpRightIcon, CodeIcon } from "@phosphor-icons/react/dist/ssr";
+import {
+	ArrowUpRightIcon,
+	GithubLogoIcon,
+} from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
 import type { Project } from "@/app/types/portfolio";
 import { Button } from "@/components/ui/button";
+import { CalendarPreview } from "./calendar-preview";
 import styles from "./portfolio.module.css";
 import { PortfolioImage } from "./portfolio-image";
 
@@ -11,27 +16,49 @@ function ProjectCard({
 	project: Project;
 	featured?: boolean;
 }) {
+	const preview = project.preview ? (
+		<PortfolioImage
+			key={project.preview.src}
+			image={project.preview}
+			sizes={
+				featured
+					? "(min-width: 1536px) 36rem, (min-width: 1024px) calc(60vw - 13rem), calc(100vw - 3rem)"
+					: "(min-width: 1536px) 32rem, (min-width: 1024px) calc((100vw - 22rem) / 2), (min-width: 768px) calc((100vw - 6rem) / 2), calc(100vw - 3rem)"
+			}
+		/>
+	) : project.visual === "calendar" ? (
+		<div className={`${styles.media} ${styles.cropped}`}>
+			<CalendarPreview />
+		</div>
+	) : null;
+
 	return (
 		<article
 			id={`project-${project.id}`}
 			className={featured ? styles.featuredProject : styles.project}
 		>
-			{project.preview ? (
-				<PortfolioImage
-					key={project.preview.src}
-					image={project.preview}
-					sizes={
-						featured
-							? "(min-width: 1536px) 36rem, (min-width: 1024px) calc(60vw - 13rem), calc(100vw - 3rem)"
-							: "(min-width: 1536px) 32rem, (min-width: 1024px) calc((100vw - 22rem) / 2), (min-width: 768px) calc((100vw - 6rem) / 2), calc(100vw - 3rem)"
-					}
-				/>
-			) : null}
+			{preview && project.caseStudy ? (
+				<Link
+					href={project.caseStudy}
+					className={styles.projectPreviewLink}
+					aria-label={`View the ${project.name} case study`}
+				>
+					{preview}
+				</Link>
+			) : (
+				preview
+			)}
 			<div className={styles.projectDescription}>
 				<p className={styles.label}>
 					<time dateTime={String(project.year)}>{project.year}</time>
 				</p>
-				<h2>{project.name}</h2>
+				<h2>
+					{project.caseStudy ? (
+						<Link href={project.caseStudy}>{project.name}</Link>
+					) : (
+						project.name
+					)}
+				</h2>
 				<p>{project.description}</p>
 				{project.technologies.length > 0 ? (
 					<ul
@@ -43,8 +70,16 @@ function ProjectCard({
 						))}
 					</ul>
 				) : null}
-				{project.live || project.github ? (
+				{project.caseStudy || project.live || project.github ? (
 					<div className={styles.projectActions}>
+						{project.caseStudy ? (
+							<Button asChild className={styles.projectLink}>
+								<Link href={project.caseStudy}>
+									View case study{" "}
+									<ArrowUpRightIcon data-icon="inline-end" aria-hidden />
+								</Link>
+							</Button>
+						) : null}
 						{project.live ? (
 							<Button asChild className={styles.projectLink}>
 								<a
@@ -53,7 +88,8 @@ function ProjectCard({
 									rel="noopener noreferrer"
 									aria-label={`Live demo of ${project.name} (opens in a new tab)`}
 								>
-									Live demo <ArrowUpRightIcon size={16} aria-hidden />
+									Live demo{" "}
+									<ArrowUpRightIcon data-icon="inline-end" aria-hidden />
 								</a>
 							</Button>
 						) : null}
@@ -65,7 +101,7 @@ function ProjectCard({
 									rel="noopener noreferrer"
 									aria-label={`Source for ${project.name} (opens in a new tab)`}
 								>
-									Source <CodeIcon size={16} aria-hidden />
+									GitHub <GithubLogoIcon data-icon="inline-end" aria-hidden />
 								</a>
 							</Button>
 						) : null}

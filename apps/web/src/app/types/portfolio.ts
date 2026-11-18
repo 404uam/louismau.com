@@ -12,6 +12,8 @@ export interface Project {
 	year: number;
 	technologies: readonly string[];
 	preview?: PortfolioImage;
+	visual?: "calendar";
+	caseStudy?: string;
 	github?: string;
 	live?: string;
 }

@@ -33,8 +33,16 @@ export function PortfolioNavigation({
 	const toggleRef = useRef<HTMLButtonElement>(null);
 	const sidebarRef = useRef<HTMLElement>(null);
 	const { openResume } = useResume();
-	const isSoftware = pathname === "/software";
-	const sections = isSoftware ? projects : collections;
+	const isSoftware =
+		pathname === "/software" || pathname.startsWith("/software/");
+	const isPhotography =
+		pathname === "/photography" || pathname.startsWith("/photography/");
+	const sections =
+		pathname === "/software"
+			? projects
+			: pathname === "/photography"
+				? collections
+				: [];
 
 	function closeMenu() {
 		setOpen(false);
@@ -129,12 +137,18 @@ export function PortfolioNavigation({
 							<li key={href}>
 								<Link
 									href={href}
-									aria-current={pathname === href ? "page" : undefined}
+									aria-current={
+										(href === "/software" && isSoftware) ||
+										(href === "/photography" && isPhotography)
+											? "page"
+											: undefined
+									}
 									className={styles.disciplineLink}
 									onClick={collapsible ? undefined : closeMenu}
 								>
 									{label}
-									{pathname === href ? (
+									{(href === "/software" && isSoftware) ||
+									(href === "/photography" && isPhotography) ? (
 										<ArrowRightIcon size={18} aria-hidden />
 									) : (
 										<ArrowUpRightIcon size={18} aria-hidden />
