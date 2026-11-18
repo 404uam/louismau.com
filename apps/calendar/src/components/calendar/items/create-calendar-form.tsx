@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type ComponentType, useState } from "react";
 import { CreateEventForm } from "@/components/calendar/items/event/create-event-form";
 import { CreateTaskForm } from "@/components/calendar/items/task/create-task-form";
 import { Sheet, SheetHeader, SheetTitle } from "@/components/ui/sheet";
@@ -13,7 +13,32 @@ import type { CalendarItem } from "@/types/calendar-item";
 
 type ItemType = CalendarItem["type"];
 
-const itemTypes: readonly ItemType[] = ["event", "task"];
+type ItemTypeConfig = {
+  label: string;
+  title: string;
+  Form: ComponentType<{
+    common: CommonFormValues;
+    onCommonChange: (values: Partial<CommonFormValues>) => void;
+    onCreate: (item: CalendarItem) => void;
+  }>;
+};
+
+const itemTypes = {
+  event: {
+    label: "Event",
+    title: "New event",
+    Form: CreateEventForm,
+  },
+  task: {
+    label: "Task",
+    title: "New task",
+    Form: CreateTaskForm,
+  },
+} satisfies Record<ItemType, ItemTypeConfig>;
+
+function isItemType(value: unknown): value is ItemType {
+  return typeof value === "string" && value in itemTypes;
+}
 
 export function CalendarItemSheet({
   isOpen,
@@ -45,6 +70,7 @@ function CalendarItemForm({
 }) {
   const [type, setType] = useState<ItemType>("event");
   const [common, setCommon] = useState<CommonFormValues>(createCommonValues);
+  const { title, Form } = itemTypes[type];
 
   function updateCommon(values: Partial<CommonFormValues>) {
     setCommon((current) => ({ ...current, ...values }));
@@ -58,14 +84,14 @@ function CalendarItemForm({
   return (
     <>
       <SheetHeader>
-        <SheetTitle>New {type}</SheetTitle>
+        <SheetTitle>{title}</SheetTitle>
         <ToggleGroup
           aria-label="Item type"
           selectionMode="single"
           disallowEmptySelection
           selectedKeys={[type]}
           onSelectionChange={(keys) => {
-            const next = itemTypes.find((value) => keys.has(value));
+            const next = Array.from(keys).find(isItemType);
             if (next) setType(next);
           }}
           variant="outline"
@@ -73,24 +99,15 @@ function CalendarItemForm({
           spacing={0}
           className="mt-2"
         >
-          <ToggleGroupItem id="event">Event</ToggleGroupItem>
-          <ToggleGroupItem id="task">Task</ToggleGroupItem>
+          {Object.entries(itemTypes).map(([value, config]) => (
+            <ToggleGroupItem key={value} id={value}>
+              {config.label}
+            </ToggleGroupItem>
+          ))}
         </ToggleGroup>
       </SheetHeader>
 
-      {type === "event" ? (
-        <CreateEventForm
-          common={common}
-          onCommonChange={updateCommon}
-          onCreate={create}
-        />
-      ) : (
-        <CreateTaskForm
-          common={common}
-          onCommonChange={updateCommon}
-          onCreate={create}
-        />
-      )}
+      <Form common={common} onCommonChange={updateCommon} onCreate={create} />
     </>
   );
 }
