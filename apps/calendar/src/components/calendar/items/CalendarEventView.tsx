@@ -3,7 +3,7 @@
 import {
   type CalendarItemLayout,
   CalendarItemPopover,
-} from "@/components/calendar/items/CalendarItemPopover";
+} from "@/components/calendar/items/CalendarItemPopoverView";
 import type { Event } from "@/types/CalendarItem";
 
 function eventTime(event: Event, date: Date): string {

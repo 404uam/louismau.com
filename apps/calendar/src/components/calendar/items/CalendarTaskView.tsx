@@ -3,7 +3,7 @@
 import {
   type CalendarItemLayout,
   CalendarItemPopover,
-} from "@/components/calendar/items/CalendarItemPopover";
+} from "@/components/calendar/items/CalendarItemPopoverView";
 import { cn } from "@/lib/Utils";
 import type { Task } from "@/types/CalendarItem";
 

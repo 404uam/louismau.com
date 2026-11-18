@@ -15,7 +15,7 @@ import {
   getViewDays,
   viewRules,
 } from "@/lib/calendar/CalendarView";
-import { db } from "@/lib/Db";
+import { calendarItemHandler, db } from "@/lib/Db";
 import { cn } from "@/lib/Utils";
 import type { CalendarItem } from "@/types/CalendarItem";
 
@@ -81,10 +81,6 @@ export function Calendar() {
     setToday(now);
     setView(next);
     setAnchorDate(anchorViewDate(next, now));
-  }
-
-  async function handleCreation(item: CalendarItem) {
-    await db.calendarItems.add(item);
   }
 
   const rules = viewRules[view];
@@ -155,7 +151,7 @@ export function Calendar() {
         <CalendarItemSheet
           isOpen={isCreating}
           onOpenChange={setIsCreating}
-          onCreate={handleCreation}
+          onCreate={calendarItemHandler.handleCreation}
         />
       )}
     </main>

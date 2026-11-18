@@ -80,7 +80,7 @@ function CalendarItemForm({
     setCommon((current) => ({ ...current, ...values }));
   }
 
-  async function handleCreation(item: CalendarItem) {
+  async function submitCreation(item: CalendarItem) {
     if (isSubmitting || !onCreate) return;
 
     setIsSubmitting(true);
@@ -127,7 +127,7 @@ function CalendarItemForm({
       <Form
         common={common}
         onCommonChange={updateCommon}
-        onCreate={handleCreation}
+        onCreate={submitCreation}
         isSubmitting={isSubmitting}
         creationError={creationError}
       />

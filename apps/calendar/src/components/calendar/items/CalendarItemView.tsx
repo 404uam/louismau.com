@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarEventView } from "@/components/calendar/items/CalendarEventView";
-import type { CalendarItemLayout } from "@/components/calendar/items/CalendarItemPopover";
+import type { CalendarItemLayout } from "@/components/calendar/items/CalendarItemPopoverView";
 import { CalendarTaskView } from "@/components/calendar/items/CalendarTaskView";
 import type { CalendarItem } from "@/types/CalendarItem";
 
