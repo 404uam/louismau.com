@@ -26,7 +26,7 @@ import {
 import { getViewerTimeZone } from "@/lib/calendar/zoned-time";
 import type { Event } from "@/types/calendar-item";
 
-const CREATION_ZONE = "creation";
+const CREATION_TIMEZONE = "creation";
 
 export function CreateEventForm({
   common,
@@ -117,21 +117,21 @@ export function CreateEventForm({
       </Field>
 
       <Field>
-        <FieldLabel>Time zone</FieldLabel>
+        <FieldLabel>Timezone</FieldLabel>
         <Select
-          aria-label="Time zone"
+          aria-label="Timezone"
           className="w-full"
-          value={timeZone ?? CREATION_ZONE}
+          value={timeZone ?? CREATION_TIMEZONE}
           onChange={(key) =>
-            setTimeZone(key === CREATION_ZONE ? undefined : String(key))
+            setTimeZone(key === CREATION_TIMEZONE ? undefined : String(key))
           }
         >
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem id={CREATION_ZONE}>
-              {`Your time zone (${viewerTimeZone})`}
+            <SelectItem id={CREATION_TIMEZONE}>
+              {`Your timezone (${viewerTimeZone})`}
             </SelectItem>
             {timeZones.map((zone) => (
               <SelectItem key={zone} id={zone}>
