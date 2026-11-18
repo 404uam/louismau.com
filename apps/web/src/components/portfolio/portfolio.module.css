@@ -1,42 +1,10 @@
-.theme {
-	--background: #f5f3ee;
-	--foreground: #20211f;
-	--card: #f5f3ee;
-	--card-foreground: #20211f;
-	--popover: #f5f3ee;
-	--popover-foreground: #20211f;
-	--primary: #20211f;
-	--primary-foreground: #f5f3ee;
-	--secondary: #e9e7e0;
-	--secondary-foreground: #20211f;
-	--muted: #e9e7e0;
-	--muted-foreground: #6e6f67;
-	--accent: #e9e7e0;
-	--accent-foreground: #20211f;
-	--border: #d4d3cb;
-	--input: #777870;
-	--ring: #20211f;
-	--sidebar: #f5f3ee;
-	--sidebar-foreground: #20211f;
-	--sidebar-primary: #20211f;
-	--sidebar-primary-foreground: #f5f3ee;
-	--sidebar-accent: #e9e7e0;
-	--sidebar-accent-foreground: #20211f;
-	--sidebar-border: #d4d3cb;
-	--sidebar-ring: #20211f;
-	color: var(--foreground);
-	background: var(--background);
-	font-family: var(--font-instrument-sans), "Helvetica Neue", sans-serif;
-	-webkit-font-smoothing: antialiased;
-}
-
-.theme :is(a, button, [tabindex="0"]):focus-visible {
+.site :is(a, button, [tabindex="0"]):focus-visible {
 	outline: 2px solid var(--foreground);
 	outline-offset: 4px;
 	box-shadow: none;
 }
 
-.theme :is(h1, h2, h3, p, a) {
+.site :is(h1, h2, h3, p, a) {
 	overflow-wrap: anywhere;
 }
 
@@ -479,6 +447,7 @@
 	max-height: 90dvh;
 	display: flex;
 	flex-direction: column;
+	background: var(--background);
 	box-shadow: 0 1rem 5rem rgb(32 33 31 / 15%);
 	border: 1px solid var(--border);
 	animation: appear 150ms ease;
@@ -702,8 +671,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.theme,
-	.theme *,
+	.site,
+	.site *,
 	.dialogOverlay {
 		animation: none;
 		transition: none;

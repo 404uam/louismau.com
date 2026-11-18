@@ -65,7 +65,7 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
 				<Dialog.Portal>
 					<Dialog.Overlay className={styles.dialogOverlay} />
 					<Dialog.Content
-						className={`${styles.theme} ${styles.resumeDialog}`}
+						className={styles.resumeDialog}
 						onOpenAutoFocus={(event) => {
 							event.preventDefault();
 							closeRef.current?.focus();
@@ -80,6 +80,9 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
 								<Dialog.Title className={styles.dialogTitle}>
 									Resume
 								</Dialog.Title>
+								<Dialog.Description className={styles.dialogDescription}>
+									Professional experience, skills, and education for Louis Mau.
+								</Dialog.Description>
 							</div>
 							<Dialog.Close asChild>
 								<Button
