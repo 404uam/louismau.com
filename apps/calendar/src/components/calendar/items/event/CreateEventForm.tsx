@@ -32,10 +32,14 @@ export function CreateEventForm({
   common,
   onCommonChange,
   onCreate,
+  isSubmitting,
+  creationError,
 }: {
   common: CommonFormValues;
   onCommonChange: (values: Partial<CommonFormValues>) => void;
-  onCreate: (event: Event) => void;
+  onCreate: (event: Event) => Promise<void>;
+  isSubmitting: boolean;
+  creationError?: string;
 }) {
   const [startAt, setStartAt] = useState("");
   const [endAt, setEndAt] = useState("");
@@ -55,7 +59,7 @@ export function CreateEventForm({
     );
   }
 
-  function submit(event: SubmitEvent<HTMLFormElement>) {
+  async function submit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const values: EventFormValues = {
       ...common,
@@ -67,11 +71,15 @@ export function CreateEventForm({
     const nextErrors = validateEventForm(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
-    onCreate(buildEvent(values));
+    await onCreate(buildEvent(values));
   }
 
   return (
-    <CreateFormLayout onSubmit={submit}>
+    <CreateFormLayout
+      onSubmit={submit}
+      isSubmitting={isSubmitting}
+      creationError={creationError}
+    >
       <TitleField
         value={common.title}
         error={errors.title}

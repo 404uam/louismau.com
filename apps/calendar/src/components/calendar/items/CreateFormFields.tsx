@@ -17,9 +17,13 @@ import type { CommonFormValues } from "@/lib/calendar/BuildCalendarItem";
 
 export function CreateFormLayout({
   onSubmit,
+  isSubmitting = false,
+  creationError,
   children,
 }: {
   onSubmit: (event: SubmitEvent<HTMLFormElement>) => void;
+  isSubmitting?: boolean;
+  creationError?: string;
   children: ReactNode;
 }) {
   return (
@@ -30,10 +34,17 @@ export function CreateFormLayout({
     >
       <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-6 pb-6">
         {children}
+        {creationError && (
+          <p role="alert" className="text-sm text-destructive">
+            {creationError}
+          </p>
+        )}
       </div>
       <SheetFooter className="flex-row justify-end border-t">
-        <SheetClose>Cancel</SheetClose>
-        <Button type="submit">Create</Button>
+        <SheetClose isDisabled={isSubmitting}>Cancel</SheetClose>
+        <Button type="submit" isDisabled={isSubmitting}>
+          {isSubmitting ? "Creating..." : "Create"}
+        </Button>
       </SheetFooter>
     </form>
   );

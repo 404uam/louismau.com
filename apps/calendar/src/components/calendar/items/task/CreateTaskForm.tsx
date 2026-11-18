@@ -22,26 +22,34 @@ export function CreateTaskForm({
   common,
   onCommonChange,
   onCreate,
+  isSubmitting,
+  creationError,
 }: {
   common: CommonFormValues;
   onCommonChange: (values: Partial<CommonFormValues>) => void;
-  onCreate: (task: Task) => void;
+  onCreate: (task: Task) => Promise<void>;
+  isSubmitting: boolean;
+  creationError?: string;
 }) {
   const [startAt, setStartAt] = useState(() => toLocalInputValue(new Date()));
   const [dueAt, setDueAt] = useState("");
   const [errors, setErrors] = useState<TaskFormErrors>({});
 
-  function submit(event: SubmitEvent<HTMLFormElement>) {
+  async function submit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const values: TaskFormValues = { ...common, startAt, dueAt };
     const nextErrors = validateTaskForm(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
-    onCreate(buildTask(values));
+    await onCreate(buildTask(values));
   }
 
   return (
-    <CreateFormLayout onSubmit={submit}>
+    <CreateFormLayout
+      onSubmit={submit}
+      isSubmitting={isSubmitting}
+      creationError={creationError}
+    >
       <TitleField
         value={common.title}
         error={errors.title}

@@ -19,7 +19,9 @@ type ItemTypeConfig = {
   Form: ComponentType<{
     common: CommonFormValues;
     onCommonChange: (values: Partial<CommonFormValues>) => void;
-    onCreate: (item: CalendarItem) => void;
+    onCreate: (item: CalendarItem) => Promise<void>;
+    isSubmitting: boolean;
+    creationError?: string;
   }>;
 };
 
@@ -70,15 +72,30 @@ function CalendarItemForm({
 }) {
   const [type, setType] = useState<ItemType>("event");
   const [common, setCommon] = useState<CommonFormValues>(createCommonValues);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [creationError, setCreationError] = useState<string>();
   const { title, Form } = itemTypes[type];
 
   function updateCommon(values: Partial<CommonFormValues>) {
     setCommon((current) => ({ ...current, ...values }));
   }
 
-  function create(item: CalendarItem) {
-    onCreate?.(item);
-    onClose();
+  async function handleCreation(item: CalendarItem) {
+    if (isSubmitting || !onCreate) return;
+
+    setIsSubmitting(true);
+    setCreationError(undefined);
+    try {
+      await onCreate(item);
+      onClose();
+    } catch (error) {
+      console.error("Could not create calendar item:", error);
+      setCreationError(
+        "The item could not be created. Please check your storage settings and try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -107,7 +124,13 @@ function CalendarItemForm({
         </ToggleGroup>
       </SheetHeader>
 
-      <Form common={common} onCommonChange={updateCommon} onCreate={create} />
+      <Form
+        common={common}
+        onCommonChange={updateCommon}
+        onCreate={handleCreation}
+        isSubmitting={isSubmitting}
+        creationError={creationError}
+      />
     </>
   );
 }

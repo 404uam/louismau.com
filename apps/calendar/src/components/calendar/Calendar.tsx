@@ -83,6 +83,10 @@ export function Calendar() {
     setAnchorDate(anchorViewDate(next, now));
   }
 
+  async function handleCreation(item: CalendarItem) {
+    await db.calendarItems.add(item);
+  }
+
   const rules = viewRules[view];
   const days = useMemo(
     () => (anchorDate ? getViewDays(view, anchorDate) : []),
@@ -148,7 +152,11 @@ export function Calendar() {
         )}
       </section>
       {hasActivatedCreationSheet && (
-        <CalendarItemSheet isOpen={isCreating} onOpenChange={setIsCreating} />
+        <CalendarItemSheet
+          isOpen={isCreating}
+          onOpenChange={setIsCreating}
+          onCreate={handleCreation}
+        />
       )}
     </main>
   );
