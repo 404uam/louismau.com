@@ -113,6 +113,74 @@ body {
   font-weight: 650;
 }
 
+.checkbox-control {
+  @apply relative flex size-4 shrink-0 items-center justify-center rounded-lg border border-input transition-shadow outline-none;
+}
+
+.checkbox-control::after {
+  position: absolute;
+  inset: -8px 0;
+  content: "";
+}
+
+:where(.dark) .checkbox-control {
+  @apply bg-input/30;
+}
+
+:where(.dark) .checkbox-control[aria-invalid="true"] {
+  @apply border-destructive/50 ring-destructive/40;
+}
+
+:where(.dark) .checkbox-control[data-invalid] {
+  @apply border-destructive/50 ring-destructive/40;
+}
+
+:where(.dark) .checkbox-control[data-checked],
+:where(.dark) .checkbox-control[data-selected] {
+  @apply bg-primary;
+}
+
+.group\/field:has(:disabled, [data-disabled]) .checkbox-control,
+.checkbox-control[data-disabled] {
+  opacity: 50%;
+}
+
+.group\/field-label:has(:focus-visible) .checkbox-control:not([data-checked]) {
+  @apply border-input;
+}
+
+.checkbox-control:focus-visible,
+.checkbox-control[data-focus-visible] {
+  @apply border-ring ring-2 ring-ring/30;
+}
+
+.checkbox-control[aria-invalid="true"],
+.checkbox-control[data-invalid] {
+  @apply border-destructive ring-2 ring-destructive/20;
+}
+
+.checkbox-control[aria-invalid="true"][aria-checked="true"] {
+  @apply border-primary;
+}
+
+.checkbox-control[data-disabled] {
+  cursor: not-allowed;
+}
+
+.checkbox-control[data-checked],
+.checkbox-control[data-selected] {
+  @apply border-primary bg-primary text-primary-foreground;
+}
+
+.group\/field-label:has(:focus-visible) .checkbox-control {
+  @apply ring-0;
+}
+
+.group\/field-label:has(:focus-visible) .checkbox-control[data-checked],
+.checkbox-control[data-invalid][data-selected] {
+  @apply border-primary;
+}
+
 .brand-mark {
   display: grid;
   width: 31px;
