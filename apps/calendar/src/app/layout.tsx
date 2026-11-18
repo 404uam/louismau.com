@@ -1,0 +1,45 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono, Manrope, Playfair_Display } from "next/font/google";
+import "./globals.css";
+import { cn } from "@/lib/Utils";
+
+const playfairDisplayHeading = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-heading",
+});
+
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Calendar",
+  description: "A calendar with month, week, three-day, and day views.",
+};
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  return (
+    <html
+      lang="en"
+      className={cn(
+        "h-full",
+        "antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        "font-sans",
+        manrope.variable,
+        playfairDisplayHeading.variable,
+      )}
+    >
+      <body className="min-h-full flex flex-col">{children}</body>
+    </html>
+  );
+}
