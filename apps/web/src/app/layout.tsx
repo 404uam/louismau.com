@@ -1,6 +1,8 @@
 import {
 	Instrument_Sans,
 	JetBrains_Mono,
+	Outfit,
+	Raleway,
 	Source_Code_Pro,
 } from "next/font/google";
 import type { ReactNode } from "react";
@@ -8,6 +10,13 @@ import "./globals.css";
 import { SidebarProvider } from "@/components/portfolio/sidebar-state";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { cn } from "@/lib/utils";
+
+const outfitHeading = Outfit({
+	subsets: ["latin"],
+	variable: "--font-heading",
+});
+
+const raleway = Raleway({ subsets: ["latin"], variable: "--font-sans" });
 
 const jetbrainsMono = JetBrains_Mono({
 	subsets: ["latin"],
@@ -34,7 +43,12 @@ export default function RootLayout({
 			lang="en"
 			data-scroll-behavior="smooth"
 			suppressHydrationWarning
-			className={cn("font-mono", jetbrainsMono.variable)}
+			className={cn(
+				jetbrainsMono.variable,
+				"font-sans",
+				raleway.variable,
+				outfitHeading.variable,
+			)}
 		>
 			<body
 				className={`${instrumentSans.variable} ${sourceCodePro.variable} antialiased`}

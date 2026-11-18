@@ -9,7 +9,7 @@ import { collectionLinks, projectLinks } from "@/lib/portfolio";
 
 export default function SidebarLayout({ children }: { children: ReactNode }) {
 	return (
-		<div className={`${styles.theme} ${styles.site}`}>
+		<div className={styles.site}>
 			<a href="#main-content" className={styles.skipLink}>
 				Skip to content
 			</a>
