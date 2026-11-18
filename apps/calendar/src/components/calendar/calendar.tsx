@@ -1,11 +1,11 @@
 "use client";
 
 import { useLiveQuery } from "dexie-react-hooks";
+import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { CalendarMonthView } from "@/components/calendar/calendar-month-view";
 import { CalendarTimeGrid } from "@/components/calendar/calendar-time-grid";
 import { CalendarToolbar } from "@/components/calendar/calendar-toolbar";
-import { CalendarItemSheet } from "@/components/calendar/items/create-calendar-form";
 import { projectCalendarItems } from "@/lib/calendar/calendar-projection";
 import {
   advanceViewDate,
@@ -20,6 +20,11 @@ import { cn } from "@/lib/utils";
 import type { CalendarItem } from "@/types/calendar-item";
 
 const emptyItems: CalendarItem[] = [];
+const CalendarItemSheet = dynamic(() =>
+  import("@/components/calendar/items/create-calendar-form").then(
+    (module) => module.CalendarItemSheet,
+  ),
+);
 
 export function Calendar() {
   const [today, setToday] = useState<Date | null>(null);
@@ -27,6 +32,8 @@ export function Calendar() {
   const [view, setView] = useState<CalendarView>("month");
   const [scrollReset, setScrollReset] = useState(0);
   const [isCreating, setIsCreating] = useState(false);
+  const [hasActivatedCreationSheet, setHasActivatedCreationSheet] =
+    useState(false);
   const query = useLiveQuery(async () => {
     try {
       return {
@@ -105,7 +112,10 @@ export function Calendar() {
           onChangeView={changeView}
           onToday={goToToday}
           onNavigate={navigate}
-          onNew={() => setIsCreating(true)}
+          onNew={() => {
+            setHasActivatedCreationSheet(true);
+            setIsCreating(true);
+          }}
         />
 
         {!query ? (
@@ -137,7 +147,9 @@ export function Calendar() {
           />
         )}
       </section>
-      <CalendarItemSheet isOpen={isCreating} onOpenChange={setIsCreating} />
+      {hasActivatedCreationSheet && (
+        <CalendarItemSheet isOpen={isCreating} onOpenChange={setIsCreating} />
+      )}
     </main>
   );
 }
