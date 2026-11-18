@@ -1,4 +1,4 @@
-import type { CalendarItem, Event, Task } from "@/types/calendar-item";
+import type { CalendarItem, Event, Task } from "@/types/CalendarItem";
 
 export interface CalendarDay {
   date: Date;

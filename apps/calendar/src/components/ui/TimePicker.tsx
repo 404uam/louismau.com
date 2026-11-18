@@ -3,13 +3,13 @@
 import { RiTimeLine } from "@remixicon/react";
 import { useState } from "react";
 import { Dialog, DialogTrigger, Popover } from "react-aria-components";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/components/ui/input-group";
+} from "@/components/ui/InputGroup";
 
 const timeOptions = Array.from({ length: 48 }, (_, index) => {
   const hour = Math.floor(index / 2);

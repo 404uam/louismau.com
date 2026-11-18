@@ -3,10 +3,10 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
-import { CalendarMonthView } from "@/components/calendar/calendar-month-view";
-import { CalendarTimeGrid } from "@/components/calendar/calendar-time-grid";
-import { CalendarToolbar } from "@/components/calendar/calendar-toolbar";
-import { projectCalendarItems } from "@/lib/calendar/calendar-projection";
+import { CalendarMonthView } from "@/components/calendar/CalendarMonthView";
+import { CalendarTimeGrid } from "@/components/calendar/CalendarTimeGrid";
+import { CalendarToolbar } from "@/components/calendar/CalendarToolbar";
+import { projectCalendarItems } from "@/lib/calendar/CalendarProjection";
 import {
   advanceViewDate,
   anchorViewDate,
@@ -14,14 +14,14 @@ import {
   formatViewLabel,
   getViewDays,
   viewRules,
-} from "@/lib/calendar/calendar-view";
-import { db } from "@/lib/db";
-import { cn } from "@/lib/utils";
-import type { CalendarItem } from "@/types/calendar-item";
+} from "@/lib/calendar/CalendarView";
+import { db } from "@/lib/Db";
+import { cn } from "@/lib/Utils";
+import type { CalendarItem } from "@/types/CalendarItem";
 
 const emptyItems: CalendarItem[] = [];
 const CalendarItemSheet = dynamic(() =>
-  import("@/components/calendar/items/create-calendar-form").then(
+  import("@/components/calendar/items/CreateCalendarForm").then(
     (module) => module.CalendarItemSheet,
   ),
 );

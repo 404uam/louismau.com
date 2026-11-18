@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Manrope, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/Utils";
 
 const playfairDisplayHeading = Playfair_Display({
   subsets: ["latin"],

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Calendar } from "@/components/calendar/calendar";
-import { Spinner } from "@/components/ui/spinner";
+import { Calendar } from "@/components/calendar/Calendar";
+import { Spinner } from "@/components/ui/Spinner";
 
 export default function Home() {
   const [storageStatus, setStorageStatus] = useState<
@@ -18,7 +18,7 @@ export default function Home() {
           throw new Error("IndexedDB is not available");
         }
 
-        const { db } = await import("@/lib/db");
+        const { db } = await import("@/lib/Db");
         await db.open();
         if (active) setStorageStatus("ready");
       } catch (error) {

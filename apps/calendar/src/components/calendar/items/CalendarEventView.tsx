@@ -3,8 +3,8 @@
 import {
   type CalendarItemLayout,
   CalendarItemPopover,
-} from "@/components/calendar/items/calendar-item-popover";
-import type { Event } from "@/types/calendar-item";
+} from "@/components/calendar/items/CalendarItemPopover";
+import type { Event } from "@/types/CalendarItem";
 
 function eventTime(event: Event, date: Date): string {
   const timeZone = event.timeZone ?? event.creationTimeZone;

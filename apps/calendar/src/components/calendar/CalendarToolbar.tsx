@@ -2,14 +2,14 @@
 
 import { AnimateIcon } from "@animate-ui/react/icons";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
-import { CalendarPlus } from "@/components/animate-ui/icons/calendar-plus";
-import { Button } from "@/components/ui/button";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { CalendarPlus } from "@/components/animate-ui/icons/CalendarPlus";
+import { Button } from "@/components/ui/Button";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/ToggleGroup";
 import {
   type CalendarView,
   viewRules,
   views,
-} from "@/lib/calendar/calendar-view";
+} from "@/lib/calendar/CalendarView";
 
 export function CalendarToolbar({
   view,

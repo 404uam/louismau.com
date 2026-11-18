@@ -1,9 +1,9 @@
 "use client";
 
 import { Dialog, DialogTrigger, Heading, Popover } from "react-aria-components";
-import { CalendarItemView } from "@/components/calendar/items/calendar-item-view";
-import { Button } from "@/components/ui/button";
-import { type CalendarDay, dateKey } from "@/lib/calendar/calendar-projection";
+import { CalendarItemView } from "@/components/calendar/items/CalendarItemView";
+import { Button } from "@/components/ui/Button";
+import { type CalendarDay, dateKey } from "@/lib/calendar/CalendarProjection";
 
 const weekdays = [
   "Sunday",

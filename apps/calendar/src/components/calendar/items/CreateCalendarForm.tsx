@@ -1,15 +1,15 @@
 "use client";
 
 import { type ComponentType, useState } from "react";
-import { CreateEventForm } from "@/components/calendar/items/event/create-event-form";
-import { CreateTaskForm } from "@/components/calendar/items/task/create-task-form";
-import { Sheet, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { CreateEventForm } from "@/components/calendar/items/event/CreateEventForm";
+import { CreateTaskForm } from "@/components/calendar/items/task/CreateTaskForm";
+import { Sheet, SheetHeader, SheetTitle } from "@/components/ui/Sheet";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/ToggleGroup";
 import {
   type CommonFormValues,
   createCommonValues,
-} from "@/lib/calendar/build-calendar-item";
-import type { CalendarItem } from "@/types/calendar-item";
+} from "@/lib/calendar/BuildCalendarItem";
+import type { CalendarItem } from "@/types/CalendarItem";
 
 type ItemType = CalendarItem["type"];
 

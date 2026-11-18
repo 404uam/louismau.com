@@ -5,26 +5,26 @@ import {
   CreateFormLayout,
   DetailFields,
   TitleField,
-} from "@/components/calendar/items/create-form-fields";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DateTimePicker } from "@/components/ui/date-time-picker";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+} from "@/components/calendar/items/CreateFormFields";
+import { Checkbox } from "@/components/ui/Checkbox";
+import { DateTimePicker } from "@/components/ui/DateTimePicker";
+import { Field, FieldError, FieldLabel } from "@/components/ui/Field";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/Select";
 import {
   buildEvent,
   type CommonFormValues,
   type EventFormErrors,
   type EventFormValues,
   validateEventForm,
-} from "@/lib/calendar/build-calendar-item";
-import { getViewerTimeZone } from "@/lib/calendar/zoned-time";
-import type { Event } from "@/types/calendar-item";
+} from "@/lib/calendar/BuildCalendarItem";
+import { getViewerTimeZone } from "@/lib/calendar/ZonedTime";
+import type { Event } from "@/types/CalendarItem";
 
 const CREATION_TIMEZONE = "creation";
 

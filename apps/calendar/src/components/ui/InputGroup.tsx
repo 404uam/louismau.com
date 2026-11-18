@@ -5,9 +5,9 @@ import { cn } from "cn";
 import type * as React from "react";
 import { Group, type GroupProps } from "react-aria-components";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
 
 function InputGroup({ className, ...props }: GroupProps) {
   return (

@@ -1,9 +1,9 @@
 "use client";
 
 import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
-import { CalendarItemView } from "@/components/calendar/items/calendar-item-view";
-import type { CalendarDay } from "@/lib/calendar/calendar-projection";
-import type { Event } from "@/types/calendar-item";
+import { CalendarItemView } from "@/components/calendar/items/CalendarItemView";
+import type { CalendarDay } from "@/lib/calendar/CalendarProjection";
+import type { Event } from "@/types/CalendarItem";
 
 const hours = Array.from({ length: 25 }, (_, hour) => hour);
 

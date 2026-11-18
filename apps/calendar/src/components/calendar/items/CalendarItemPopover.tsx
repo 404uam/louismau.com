@@ -2,8 +2,8 @@
 
 import type { ReactNode } from "react";
 import { Dialog, DialogTrigger, Heading, Popover } from "react-aria-components";
-import { Button } from "@/components/ui/button";
-import type { CalendarItem } from "@/types/calendar-item";
+import { Button } from "@/components/ui/Button";
+import type { CalendarItem } from "@/types/CalendarItem";
 
 export type CalendarItemLayout = "row" | "block";
 

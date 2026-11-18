@@ -1,5 +1,5 @@
 import { Dexie, type Table } from "dexie";
-import type { CalendarItem } from "../types/calendar-item";
+import type { CalendarItem } from "../types/CalendarItem";
 
 const db = new Dexie("CalendarDatabase") as Dexie & {
   calendarItems: Table<CalendarItem, string>;
@@ -11,5 +11,5 @@ db.version(2).stores({
   calendarItems: "id, type, startAt",
 });
 
-export type { CalendarItem, Event, Task } from "../types/calendar-item";
+export type { CalendarItem, Event, Task } from "../types/CalendarItem";
 export { db };

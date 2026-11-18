@@ -5,9 +5,9 @@ import {
   CreateFormLayout,
   DetailFields,
   TitleField,
-} from "@/components/calendar/items/create-form-fields";
-import { DateTimePicker } from "@/components/ui/date-time-picker";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+} from "@/components/calendar/items/CreateFormFields";
+import { DateTimePicker } from "@/components/ui/DateTimePicker";
+import { Field, FieldError, FieldLabel } from "@/components/ui/Field";
 import {
   buildTask,
   type CommonFormValues,
@@ -15,8 +15,8 @@ import {
   type TaskFormValues,
   toLocalInputValue,
   validateTaskForm,
-} from "@/lib/calendar/build-calendar-item";
-import type { Task } from "@/types/calendar-item";
+} from "@/lib/calendar/BuildCalendarItem";
+import type { Task } from "@/types/CalendarItem";
 
 export function CreateTaskForm({
   common,

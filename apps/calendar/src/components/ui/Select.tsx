@@ -25,7 +25,7 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from "@/components/ui/input-group";
+} from "@/components/ui/InputGroup";
 
 function Select<T extends object, M extends "single" | "multiple" = "single">({
   className,

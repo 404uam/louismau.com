@@ -1,5 +1,5 @@
-import type { Event, RelativeReminder, Task } from "@/types/calendar-item";
-import { getViewerTimeZone, zonedLocalToDate } from "./zoned-time";
+import type { Event, RelativeReminder, Task } from "@/types/CalendarItem";
+import { getViewerTimeZone, zonedLocalToDate } from "./ZonedTime";
 
 export interface CommonFormValues {
   title: string;

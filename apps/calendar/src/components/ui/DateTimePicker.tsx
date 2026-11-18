@@ -1,8 +1,8 @@
 "use client";
 
 import { cn } from "cn";
-import { DatePicker, toCalendarDate } from "@/components/ui/date-picker";
-import { TimePicker } from "@/components/ui/time-picker";
+import { DatePicker, toCalendarDate } from "@/components/ui/DatePicker";
+import { TimePicker } from "@/components/ui/TimePicker";
 
 export function DateTimePicker({
   id,

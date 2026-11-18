@@ -3,9 +3,9 @@
 import {
   type CalendarItemLayout,
   CalendarItemPopover,
-} from "@/components/calendar/items/calendar-item-popover";
-import { cn } from "@/lib/utils";
-import type { Task } from "@/types/calendar-item";
+} from "@/components/calendar/items/CalendarItemPopover";
+import { cn } from "@/lib/Utils";
+import type { Task } from "@/types/CalendarItem";
 
 export function CalendarTaskView({
   task,
