@@ -1,9 +1,12 @@
 "use client";
 
 import { Dialog, DialogTrigger, Heading, Popover } from "react-aria-components";
-import { CalendarItemView } from "@/components/calendar/items/CalendarItemView";
 import { Button } from "@/components/ui/Button";
-import { type CalendarDay, dateKey } from "@/lib/calendar/CalendarProjection";
+import {
+  type CalendarDay,
+  dateKey,
+} from "@/features/calendar/view-models/calendarDays";
+import { CalendarEntry } from "@/features/calendar/views/calendar-entry/CalendarEntry";
 
 const weekdays = [
   "Sunday",
@@ -17,14 +20,16 @@ const weekdays = [
 
 const monthItemLimit = 2;
 
-export function CalendarMonthView({
+export function MonthView({
   days,
   today,
   anchorDate,
+  onDelete,
 }: {
   days: CalendarDay[];
   today: Date | null;
   anchorDate: Date | null;
+  onDelete: (id: string) => Promise<void>;
 }) {
   const monthLabel = anchorDate?.toLocaleDateString("en-US", {
     month: "long",
@@ -77,7 +82,11 @@ export function CalendarMonthView({
                       </time>
                       <div className="calendar-month-items">
                         {dayItems.slice(0, monthItemLimit).map((item) => (
-                          <CalendarItemView key={item.id} item={item} />
+                          <CalendarEntry
+                            key={item.id}
+                            item={item}
+                            onDelete={onDelete}
+                          />
                         ))}
                         {hiddenItems.length > 0 ? (
                           <DialogTrigger>
@@ -102,9 +111,10 @@ export function CalendarMonthView({
                                       })}
                                     </Heading>
                                     {hiddenItems.map((item) => (
-                                      <CalendarItemView
+                                      <CalendarEntry
                                         key={item.id}
                                         item={item}
+                                        onDelete={onDelete}
                                       />
                                     ))}
                                     <Button

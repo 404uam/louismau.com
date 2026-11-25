@@ -1,8 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { Calendar } from "@/components/calendar/Calendar";
 import { Spinner } from "@/components/ui/Spinner";
+
+const CalendarApp = dynamic(() =>
+  import("@/features/calendar/CalendarApp").then(
+    (module) => module.CalendarApp,
+  ),
+);
 
 export default function Home() {
   const [storageStatus, setStorageStatus] = useState<
@@ -18,8 +24,10 @@ export default function Home() {
           throw new Error("IndexedDB is not available");
         }
 
-        const { db } = await import("@/lib/Db");
-        await db.open();
+        const { calendarDatabase } = await import(
+          "@/features/calendar/repository/CalendarDatabase"
+        );
+        await calendarDatabase.open();
         if (active) setStorageStatus("ready");
       } catch (error) {
         console.error("Could not open the calendar database:", error);
@@ -60,5 +68,5 @@ export default function Home() {
     );
   }
 
-  return <Calendar />;
+  return <CalendarApp />;
 }

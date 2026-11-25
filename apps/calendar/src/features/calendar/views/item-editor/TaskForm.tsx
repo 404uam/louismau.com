@@ -1,32 +1,34 @@
 "use client";
 
 import { type SubmitEvent, useState } from "react";
-import {
-  CreateFormLayout,
-  DetailFields,
-  TitleField,
-} from "@/components/calendar/items/CreateFormFields";
 import { DateTimePicker } from "@/components/ui/DateTimePicker";
 import { Field, FieldError, FieldLabel } from "@/components/ui/Field";
 import {
-  buildTask,
-  type CommonFormValues,
   type TaskFormErrors,
-  type TaskFormValues,
   toLocalInputValue,
-  validateTaskForm,
-} from "@/lib/calendar/BuildCalendarItem";
-import type { Task } from "@/types/CalendarItem";
+  validateTaskDraft,
+} from "@/features/calendar/controllers/calendarItemForm";
+import type { Task } from "@/features/calendar/models/CalendarItem";
+import {
+  buildTask,
+  type CommonCalendarItemDraft,
+  type TaskDraft,
+} from "@/features/calendar/models/CalendarItemFactory";
+import {
+  CalendarItemFormLayout,
+  DetailFields,
+  TitleField,
+} from "@/features/calendar/views/item-editor/CalendarItemFormFields";
 
-export function CreateTaskForm({
+export function TaskForm({
   common,
   onCommonChange,
   onCreate,
   isSubmitting,
   creationError,
 }: {
-  common: CommonFormValues;
-  onCommonChange: (values: Partial<CommonFormValues>) => void;
+  common: CommonCalendarItemDraft;
+  onCommonChange: (values: Partial<CommonCalendarItemDraft>) => void;
   onCreate: (task: Task) => Promise<void>;
   isSubmitting: boolean;
   creationError?: string;
@@ -37,15 +39,15 @@ export function CreateTaskForm({
 
   async function submit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    const values: TaskFormValues = { ...common, startAt, dueAt };
-    const nextErrors = validateTaskForm(values);
+    const values: TaskDraft = { ...common, startAt, dueAt };
+    const nextErrors = validateTaskDraft(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
     await onCreate(buildTask(values));
   }
 
   return (
-    <CreateFormLayout
+    <CalendarItemFormLayout
       onSubmit={submit}
       isSubmitting={isSubmitting}
       creationError={creationError}
@@ -79,6 +81,6 @@ export function CreateTaskForm({
       </Field>
 
       <DetailFields values={common} onChange={onCommonChange} />
-    </CreateFormLayout>
+    </CalendarItemFormLayout>
   );
 }

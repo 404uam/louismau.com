@@ -1,11 +1,6 @@
 "use client";
 
 import { type SubmitEvent, useMemo, useState } from "react";
-import {
-  CreateFormLayout,
-  DetailFields,
-  TitleField,
-} from "@/components/calendar/items/CreateFormFields";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { DateTimePicker } from "@/components/ui/DateTimePicker";
 import { Field, FieldError, FieldLabel } from "@/components/ui/Field";
@@ -17,26 +12,33 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 import {
-  buildEvent,
-  type CommonFormValues,
   type EventFormErrors,
-  type EventFormValues,
-  validateEventForm,
-} from "@/lib/calendar/BuildCalendarItem";
-import { getViewerTimeZone } from "@/lib/calendar/ZonedTime";
-import type { Event } from "@/types/CalendarItem";
+  validateEventDraft,
+} from "@/features/calendar/controllers/calendarItemForm";
+import type { Event } from "@/features/calendar/models/CalendarItem";
+import {
+  buildEvent,
+  type CommonCalendarItemDraft,
+  type EventDraft,
+} from "@/features/calendar/models/CalendarItemFactory";
+import { getViewerTimeZone } from "@/features/calendar/models/ZonedTime";
+import {
+  CalendarItemFormLayout,
+  DetailFields,
+  TitleField,
+} from "@/features/calendar/views/item-editor/CalendarItemFormFields";
 
 const CREATION_TIMEZONE = "creation";
 
-export function CreateEventForm({
+export function EventForm({
   common,
   onCommonChange,
   onCreate,
   isSubmitting,
   creationError,
 }: {
-  common: CommonFormValues;
-  onCommonChange: (values: Partial<CommonFormValues>) => void;
+  common: CommonCalendarItemDraft;
+  onCommonChange: (values: Partial<CommonCalendarItemDraft>) => void;
   onCreate: (event: Event) => Promise<void>;
   isSubmitting: boolean;
   creationError?: string;
@@ -61,21 +63,21 @@ export function CreateEventForm({
 
   async function submit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    const values: EventFormValues = {
+    const values: EventDraft = {
       ...common,
       startAt,
       endAt,
       allDay,
       timeZone,
     };
-    const nextErrors = validateEventForm(values);
+    const nextErrors = validateEventDraft(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
     await onCreate(buildEvent(values));
   }
 
   return (
-    <CreateFormLayout
+    <CalendarItemFormLayout
       onSubmit={submit}
       isSubmitting={isSubmitting}
       creationError={creationError}
@@ -151,6 +153,6 @@ export function CreateEventForm({
       </Field>
 
       <DetailFields values={common} onChange={onCommonChange} />
-    </CreateFormLayout>
+    </CalendarItemFormLayout>
   );
 }

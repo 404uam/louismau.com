@@ -13,9 +13,9 @@ import {
 } from "@/components/ui/Select";
 import { SheetClose, SheetFooter } from "@/components/ui/Sheet";
 import { Textarea } from "@/components/ui/Textarea";
-import type { CommonFormValues } from "@/lib/calendar/BuildCalendarItem";
+import type { CommonCalendarItemDraft } from "@/features/calendar/models/CalendarItemFactory";
 
-export function CreateFormLayout({
+export function CalendarItemFormLayout({
   onSubmit,
   isSubmitting = false,
   creationError,
@@ -78,8 +78,8 @@ export function DetailFields({
   values,
   onChange,
 }: {
-  values: CommonFormValues;
-  onChange: (values: Partial<CommonFormValues>) => void;
+  values: CommonCalendarItemDraft;
+  onChange: (values: Partial<CommonCalendarItemDraft>) => void;
 }) {
   return (
     <>
@@ -124,7 +124,7 @@ export function DetailFields({
             onChange({
               reminderMinutes: String(
                 key,
-              ) as CommonFormValues["reminderMinutes"],
+              ) as CommonCalendarItemDraft["reminderMinutes"],
             })
           }
         >

@@ -1,10 +1,10 @@
 "use client";
 
+import type { Event } from "@/features/calendar/models/CalendarItem";
 import {
-  type CalendarItemLayout,
-  CalendarItemPopover,
-} from "@/components/calendar/items/CalendarItemPopoverView";
-import type { Event } from "@/types/CalendarItem";
+  type CalendarEntryLayout,
+  CalendarEntryPopover,
+} from "@/features/calendar/views/calendar-entry/CalendarEntryPopover";
 
 function eventTime(event: Event, date: Date): string {
   const timeZone = event.timeZone ?? event.creationTimeZone;
@@ -27,17 +27,19 @@ function eventDate(event: Event, date: Date): string {
   }).format(date);
 }
 
-export function CalendarEventView({
+export function EventEntry({
   event,
   layout,
+  onDelete,
 }: {
   event: Event;
-  layout: CalendarItemLayout;
+  layout: CalendarEntryLayout;
+  onDelete: (id: string) => Promise<void>;
 }) {
   const timeLabel = event.allDay ? "All day" : eventTime(event, event.startAt);
 
   return (
-    <CalendarItemPopover
+    <CalendarEntryPopover
       item={event}
       layout={layout}
       variant="calendar-event"
@@ -45,6 +47,7 @@ export function CalendarEventView({
         .filter(Boolean)
         .join(", ")}
       typeLabel="Event"
+      onDelete={onDelete}
       renderDetails={() => {
         const startDate = eventDate(event, event.startAt);
         const endDate = eventDate(event, event.endAt);
@@ -66,6 +69,6 @@ export function CalendarEventView({
           {eventTime(event, event.startAt)} – {eventTime(event, event.endAt)}
         </span>
       ) : null}
-    </CalendarItemPopover>
+    </CalendarEntryPopover>
   );
 }

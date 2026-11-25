@@ -1,23 +1,25 @@
 "use client";
 
+import type { Task } from "@/features/calendar/models/CalendarItem";
 import {
-  type CalendarItemLayout,
-  CalendarItemPopover,
-} from "@/components/calendar/items/CalendarItemPopoverView";
+  type CalendarEntryLayout,
+  CalendarEntryPopover,
+} from "@/features/calendar/views/calendar-entry/CalendarEntryPopover";
 import { cn } from "@/lib/Utils";
-import type { Task } from "@/types/CalendarItem";
 
-export function CalendarTaskView({
+export function TaskEntry({
   task,
   layout,
+  onDelete,
 }: {
   task: Task;
-  layout: CalendarItemLayout;
+  layout: CalendarEntryLayout;
+  onDelete: (id: string) => Promise<void>;
 }) {
   const completed = Boolean(task.completedAt);
 
   return (
-    <CalendarItemPopover
+    <CalendarEntryPopover
       item={task}
       layout={layout}
       variant="calendar-task"
@@ -25,6 +27,7 @@ export function CalendarTaskView({
         .filter(Boolean)
         .join(", ")}
       typeLabel={completed ? "Completed task" : "Task"}
+      onDelete={onDelete}
       renderDetails={() => (
         <p>
           Starts{" "}
@@ -39,6 +42,6 @@ export function CalendarTaskView({
       <span className={cn("calendar-item-title", completed && "line-through")}>
         {task.title}
       </span>
-    </CalendarItemPopover>
+    </CalendarEntryPopover>
   );
 }

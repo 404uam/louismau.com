@@ -3,26 +3,27 @@
 import { type ReactNode, useState } from "react";
 import { Dialog, DialogTrigger, Heading, Popover } from "react-aria-components";
 import { Button } from "@/components/ui/Button";
-import { calendarItemHandler } from "@/lib/Db";
-import type { CalendarItem } from "@/types/CalendarItem";
+import type { CalendarItem } from "@/features/calendar/models/CalendarItem";
 
-export type CalendarItemLayout = "row" | "block";
+export type CalendarEntryLayout = "row" | "block";
 
-export function CalendarItemPopover({
+export function CalendarEntryPopover({
   item,
   layout,
   variant,
   accessibleLabel,
   typeLabel,
   renderDetails,
+  onDelete,
   children,
 }: {
   item: CalendarItem;
-  layout: CalendarItemLayout;
+  layout: CalendarEntryLayout;
   variant: "calendar-event" | "calendar-task";
   accessibleLabel: string;
   typeLabel: string;
   renderDetails: () => ReactNode;
+  onDelete: (id: string) => Promise<void>;
   children: ReactNode;
 }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -86,7 +87,7 @@ export function CalendarItemPopover({
     setIsDeleting(true);
     setDeletionError(undefined);
     try {
-      await calendarItemHandler.handleDeletion(item.id);
+      await onDelete(item.id);
       return true;
     } catch (error) {
       console.error("Could not delete calendar item:", error);

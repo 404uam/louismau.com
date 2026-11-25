@@ -1,9 +1,9 @@
 "use client";
 
 import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
-import { CalendarItemView } from "@/components/calendar/items/CalendarItemView";
-import type { CalendarDay } from "@/lib/calendar/CalendarProjection";
-import type { Event } from "@/types/CalendarItem";
+import type { CalendarDay } from "@/features/calendar/view-models/calendarDays";
+import { layoutTimedEvents } from "@/features/calendar/view-models/timedEventLayout";
+import { CalendarEntry } from "@/features/calendar/views/calendar-entry/CalendarEntry";
 
 const hours = Array.from({ length: 25 }, (_, hour) => hour);
 
@@ -15,72 +15,18 @@ function initialHour(now: Date) {
   return Math.max(0, now.getHours() + now.getMinutes() / 60 - 4);
 }
 
-function minutesSinceMidnight(date: Date) {
-  return date.getHours() * 60 + date.getMinutes() + date.getSeconds() / 60;
-}
-
-function layoutEvents(events: Event[], day: Date, hourHeight: number) {
-  const dayStart = day.getTime();
-  const dayEnd = new Date(
-    day.getFullYear(),
-    day.getMonth(),
-    day.getDate() + 1,
-  ).getTime();
-  const minimumMinutes = Math.min(1440, (20 / hourHeight) * 60);
-  const segments = events
-    .map((item) => {
-      const start =
-        item.startAt.getTime() <= dayStart
-          ? 0
-          : minutesSinceMidnight(item.startAt);
-      const end =
-        item.endAt.getTime() >= dayEnd
-          ? 1440
-          : minutesSinceMidnight(item.endAt);
-      const top = Math.min(start, 1440 - minimumMinutes);
-      const bottom = Math.min(1440, Math.max(end, top + minimumMinutes));
-      return { item, top, bottom, column: 0 };
-    })
-    .toSorted((a, b) => a.top - b.top || b.bottom - a.bottom);
-
-  const groups: {
-    segments: typeof segments;
-    laneEnds: number[];
-    end: number;
-  }[] = [];
-  for (const segment of segments) {
-    let group = groups[groups.length - 1];
-    if (!group || segment.top >= group.end) {
-      group = { segments: [], laneEnds: [], end: 0 };
-      groups.push(group);
-    }
-
-    const availableLane = group.laneEnds.findIndex((end) => end <= segment.top);
-    segment.column =
-      availableLane === -1 ? group.laneEnds.length : availableLane;
-    group.laneEnds[segment.column] = segment.bottom;
-    group.end = Math.max(group.end, segment.bottom);
-    group.segments.push(segment);
-  }
-
-  return groups.flatMap((group) =>
-    group.segments.map((segment) => ({
-      ...segment,
-      columns: group.laneEnds.length,
-    })),
-  );
-}
-
-export function CalendarTimeGrid({
+export function TimeGridView({
   days,
   now,
   scrollReset,
   label,
+  onDelete,
 }: {
   days: CalendarDay[];
   now: Date;
   scrollReset: number;
   label: string;
+  onDelete: (id: string) => Promise<void>;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLElement>(null);
@@ -174,10 +120,18 @@ export function CalendarTimeGrid({
             {allDayEvents.length || tasks.length ? (
               <div className="calendar-header-items">
                 {allDayEvents.map((item) => (
-                  <CalendarItemView key={item.id} item={item} />
+                  <CalendarEntry
+                    key={item.id}
+                    item={item}
+                    onDelete={onDelete}
+                  />
                 ))}
                 {tasks.map((item) => (
-                  <CalendarItemView key={item.id} item={item} />
+                  <CalendarEntry
+                    key={item.id}
+                    item={item}
+                    onDelete={onDelete}
+                  />
                 ))}
               </div>
             ) : null}
@@ -228,7 +182,7 @@ export function CalendarTimeGrid({
                   aria-label={`Current time ${now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}`}
                 />
               ) : null}
-              {layoutEvents(timedEvents, date, measuredHourHeight).map(
+              {layoutTimedEvents(timedEvents, date, measuredHourHeight).map(
                 ({ item, top, bottom, column, columns }) => (
                   <div
                     className="calendar-timed-event"
@@ -240,7 +194,11 @@ export function CalendarTimeGrid({
                       width: `calc(${100 / columns}% - 4px)`,
                     }}
                   >
-                    <CalendarItemView item={item} layout="block" />
+                    <CalendarEntry
+                      item={item}
+                      layout="block"
+                      onDelete={onDelete}
+                    />
                   </div>
                 ),
               )}

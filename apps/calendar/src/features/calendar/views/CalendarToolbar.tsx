@@ -9,7 +9,7 @@ import {
   type CalendarView,
   viewRules,
   views,
-} from "@/lib/calendar/CalendarView";
+} from "@/features/calendar/models/CalendarViewConfig";
 
 export function CalendarToolbar({
   view,

@@ -1,4 +1,8 @@
-import type { CalendarItem, Event, Task } from "@/types/CalendarItem";
+import type {
+  CalendarItem,
+  Event,
+  Task,
+} from "@/features/calendar/models/CalendarItem";
 
 export interface CalendarDay {
   date: Date;
@@ -15,7 +19,7 @@ export function dateKey(date: Date): string {
   return `${year}-${month}-${day}`;
 }
 
-export function projectCalendarItems(
+export function projectCalendarDays(
   items: CalendarItem[],
   days: Date[],
 ): CalendarDay[] {
