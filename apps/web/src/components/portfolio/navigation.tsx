@@ -1,11 +1,6 @@
 "use client";
 
-import {
-	ArrowRightIcon,
-	ArrowUpRightIcon,
-	ListIcon,
-	XIcon,
-} from "@phosphor-icons/react/dist/ssr";
+import { ListIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type ReactNode, useEffect, useRef } from "react";
@@ -147,12 +142,6 @@ export function PortfolioNavigation({
 									onClick={collapsible ? undefined : closeMenu}
 								>
 									{label}
-									{(href === "/software" && isSoftware) ||
-									(href === "/photography" && isPhotography) ? (
-										<ArrowRightIcon size={18} aria-hidden />
-									) : (
-										<ArrowUpRightIcon size={18} aria-hidden />
-									)}
 								</Link>
 								{pathname === href && sections.length > 0 ? (
 									<ul className={styles.sectionLinks}>
@@ -184,7 +173,7 @@ export function PortfolioNavigation({
 							openResume(returnTo ?? event.currentTarget);
 						}}
 					>
-						View resume <ArrowUpRightIcon size={18} aria-hidden />
+						View resume
 					</Button>
 					{footer}
 				</div>

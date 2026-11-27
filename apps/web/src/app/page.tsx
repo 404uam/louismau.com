@@ -1,4 +1,3 @@
-import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PortfolioNavigation } from "@/components/portfolio/navigation";
@@ -47,18 +46,14 @@ export default function Home() {
 						<SocialLinks />
 						<nav aria-label="Choose a portfolio" className={styles.directions}>
 							<Button asChild className={styles.directionLink}>
-								<Link href="/software">
-									Software <ArrowUpRightIcon size={18} aria-hidden />
-								</Link>
+								<Link href="/software">Software</Link>
 							</Button>
 							<Button
 								asChild
 								variant="outline"
 								className={styles.directionLink}
 							>
-								<Link href="/photography">
-									Photography <ArrowUpRightIcon size={18} aria-hidden />
-								</Link>
+								<Link href="/photography">Photography</Link>
 							</Button>
 						</nav>
 					</main>

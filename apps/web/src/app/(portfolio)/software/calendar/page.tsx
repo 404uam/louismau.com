@@ -1,7 +1,4 @@
 import {
-	ArrowDownIcon,
-	ArrowLeftIcon,
-	ArrowUpRightIcon,
 	DatabaseIcon,
 	GithubLogoIcon,
 	LayoutIcon,
@@ -35,7 +32,6 @@ export default function CalendarCaseStudyPage() {
 			<header className={styles.hero}>
 				<div className={portfolioStyles.pageTopline}>
 					<Link href="/software" className={styles.backLink}>
-						<ArrowLeftIcon size={16} aria-hidden />
 						Software
 					</Link>
 					<ResumeButton />
@@ -70,10 +66,7 @@ export default function CalendarCaseStudyPage() {
 
 				<div className={styles.heroActions}>
 					<Button asChild variant="outline" className={styles.actionButton}>
-						<a href="#design-story">
-							Read the design story{" "}
-							<ArrowDownIcon data-icon="inline-end" aria-hidden />
-						</a>
+						<a href="#design-story">Read the design story </a>
 					</Button>
 					<Button asChild className={styles.actionButton}>
 						<a href={githubUrl} target="_blank" rel="noopener noreferrer">
@@ -268,7 +261,7 @@ export default function CalendarCaseStudyPage() {
 				</div>
 				<Button asChild className={styles.actionButton}>
 					<a href={githubUrl} target="_blank" rel="noopener noreferrer">
-						Open GitHub <ArrowUpRightIcon data-icon="inline-end" aria-hidden />
+						Open GitHub
 					</a>
 				</Button>
 			</footer>

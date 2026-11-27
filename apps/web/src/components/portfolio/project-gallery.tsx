@@ -1,7 +1,4 @@
-import {
-	ArrowUpRightIcon,
-	GithubLogoIcon,
-} from "@phosphor-icons/react/dist/ssr";
+import { GithubLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import type { Project } from "@/app/types/portfolio";
 import { Button } from "@/components/ui/button";
@@ -74,10 +71,7 @@ function ProjectCard({
 					<div className={styles.projectActions}>
 						{project.caseStudy ? (
 							<Button asChild className={styles.projectLink}>
-								<Link href={project.caseStudy}>
-									View case study{" "}
-									<ArrowUpRightIcon data-icon="inline-end" aria-hidden />
-								</Link>
+								<Link href={project.caseStudy}>View case study </Link>
 							</Button>
 						) : null}
 						{project.live ? (
@@ -89,7 +83,6 @@ function ProjectCard({
 									aria-label={`Live demo of ${project.name} (opens in a new tab)`}
 								>
 									Live demo{" "}
-									<ArrowUpRightIcon data-icon="inline-end" aria-hidden />
 								</a>
 							</Button>
 						) : null}
