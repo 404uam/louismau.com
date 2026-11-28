@@ -6,9 +6,16 @@ export const projects: readonly Project[] = [
 		id: "calendar",
 		name: "Calendar",
 		description:
-			"A calm, local-first calendar for seeing what matters now without turning planning into another chore.",
+			"A local calendar for trying to organize events, tasks and to-dos inspired by the musings of the WVFRM Podcast team",
 		year: 2026,
-		technologies: ["Next.js", "TypeScript", "Tauri", "Dexie", "IndexedDB"],
+		technologies: [
+			"TypeScript",
+			"Rust",
+			"Tauri",
+			"Next.js",
+			"Dexie",
+			"IndexedDB",
+		],
 		visual: "calendar",
 		caseStudy: "/software/calendar",
 		github: "https://github.com/404uam/louismau.com/tree/main/apps/calendar",

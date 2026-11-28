@@ -8,8 +8,11 @@ export function visibleCollections(collections: readonly PhotoCollection[]) {
 	return collections.filter((collection) => collection.photos.length > 0);
 }
 
-export function projectLinks(projects: readonly Project[]): SectionLink[] {
-	return projects.map(({ id, name }) => ({ id: `project-${id}`, label: name }));
+export function toSectionLink(projects: readonly Project[]): SectionLink[] {
+	return projects.map(({ id, caseStudy, name }) => ({
+		id: caseStudy ?? `/software#project-${id}`,
+		label: name,
+	}));
 }
 
 export function collectionLinks(

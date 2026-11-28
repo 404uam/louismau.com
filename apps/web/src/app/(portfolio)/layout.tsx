@@ -5,7 +5,7 @@ import { ResumeProvider } from "@/components/portfolio/resume-dialog";
 import { SocialLinks } from "@/components/portfolio/social-links";
 import { collections } from "@/data/photos";
 import { projects } from "@/data/projects";
-import { collectionLinks, projectLinks } from "@/lib/portfolio";
+import { collectionLinks, toSectionLink } from "@/lib/portfolio";
 
 export default function SidebarLayout({ children }: { children: ReactNode }) {
 	return (
@@ -16,7 +16,7 @@ export default function SidebarLayout({ children }: { children: ReactNode }) {
 			<ResumeProvider>
 				<PortfolioNavigation
 					collapsible
-					projects={projectLinks(projects)}
+					projects={toSectionLink(projects)}
 					collections={collectionLinks(collections)}
 					footer={
 						<>

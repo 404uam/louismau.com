@@ -5,6 +5,8 @@ import styles from "@/components/portfolio/portfolio.module.css";
 import { ResumeProvider } from "@/components/portfolio/resume-dialog";
 import { SocialLinks } from "@/components/portfolio/social-links";
 import { Button } from "@/components/ui/button";
+import { projects } from "@/data/projects";
+import type { SectionLink } from "./types/portfolio";
 
 const title = "Portfolio | Louis Mau";
 const description =
@@ -17,6 +19,15 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
+	const projs = projects.map((project) => {
+		console.log(project.name);
+		const sectionLink: SectionLink = {
+			id: project.id,
+			label: project.name,
+		};
+		return sectionLink;
+	});
+
 	return (
 		<div className={`${styles.site} ${styles.entrySite}`}>
 			<a href="#main-content" className={styles.skipLink}>
@@ -25,7 +36,7 @@ export default function Home() {
 			<ResumeProvider>
 				<PortfolioNavigation
 					collapsible
-					projects={[]}
+					projects={projs}
 					collections={[]}
 					footer={
 						<>

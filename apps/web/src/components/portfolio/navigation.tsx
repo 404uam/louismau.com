@@ -32,12 +32,7 @@ export function PortfolioNavigation({
 		pathname === "/software" || pathname.startsWith("/software/");
 	const isPhotography =
 		pathname === "/photography" || pathname.startsWith("/photography/");
-	const sections =
-		pathname === "/software"
-			? projects
-			: pathname === "/photography"
-				? collections
-				: [];
+	const sections = isSoftware ? projects : isPhotography ? collections : [];
 
 	function closeMenu() {
 		setOpen(false);
@@ -143,13 +138,18 @@ export function PortfolioNavigation({
 								>
 									{label}
 								</Link>
-								{pathname === href && sections.length > 0 ? (
+								{((href === "/software" && isSoftware) ||
+									(href === "/photography" && isPhotography)) &&
+								sections.length > 0 ? (
 									<ul className={styles.sectionLinks}>
 										{sections.map(({ id, label: sectionLabel }) => (
 											<li key={id}>
-												<a href={`#${id}`} onClick={closeMenu}>
+												<Link
+													href={id}
+													aria-current={pathname === id ? "page" : undefined}
+												>
 													{sectionLabel}
-												</a>
+												</Link>
 											</li>
 										))}
 									</ul>

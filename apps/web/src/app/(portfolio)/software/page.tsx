@@ -23,13 +23,9 @@ export default function SoftwarePage() {
 			data-scroll-behavior="smooth"
 		>
 			<header className={styles.pageHeader}>
-				<div className={styles.pageTopline}>
-					<p className={styles.label}>Louis Mau / Selected work</p>
-					<ResumeButton />
-				</div>
 				<div className={styles.pageHeading}>
 					<h1>Software</h1>
-					<p>{description}</p>
+					<ResumeButton />
 				</div>
 			</header>
 			<ProjectGallery projects={projects} />
