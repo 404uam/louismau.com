@@ -24,8 +24,10 @@ function ProjectCard({
 			}
 		/>
 	) : project.visual === "calendar" ? (
-		<div className={`${styles.media} ${styles.cropped}`}>
-			<CalendarPreview />
+		<div
+			className={`${styles.media} ${styles.cropped} ${styles.calendarMedia}`}
+		>
+			<CalendarPreview compact />
 		</div>
 	) : null;
 

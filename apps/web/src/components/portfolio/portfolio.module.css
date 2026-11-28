@@ -362,6 +362,11 @@
 .cropped {
 	aspect-ratio: 16 / 10;
 }
+@media (max-width: 639px) {
+	.calendarMedia {
+		aspect-ratio: 4 / 3;
+	}
+}
 .imageFallback {
 	position: absolute;
 	inset: 0;

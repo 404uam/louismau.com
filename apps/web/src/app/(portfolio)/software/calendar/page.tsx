@@ -84,15 +84,13 @@ export default function CalendarCaseStudyPage() {
 			>
 				<div className={styles.sectionIntro}>
 					<div>
-						<p className={portfolioStyles.label}>
-							Interactive preview / Planned
-						</p>
-						<h2 id="demo-title">A demo is coming with the first release.</h2>
+						<p className={portfolioStyles.label}>Product preview / Static</p>
+						<h2 id="demo-title">The completed month view, at a glance.</h2>
 					</div>
 					<p>
-						The calendar is still in development, so this page does not pretend
-						to be a production deployment. The first release will include an
-						embedded, read-only playground made specifically for the portfolio.
+						This lightweight representation mirrors the implemented calendar
+						layout and sample information. It is intentionally static: the
+						portfolio does not load personal data or access calendar storage.
 					</p>
 				</div>
 
@@ -100,7 +98,7 @@ export default function CalendarCaseStudyPage() {
 					<div className={styles.demoChrome}>
 						<div>
 							<span className={styles.statusDot} aria-hidden="true" />
-							<span>Preview of the upcoming demo</span>
+							<span>Static product preview</span>
 						</div>
 						<span>November 2026</span>
 					</div>
@@ -109,10 +107,10 @@ export default function CalendarCaseStudyPage() {
 					</div>
 					<div className={styles.demoFooter}>
 						<p>
-							Planned interactions: move through dates, switch time scales,
-							select an item, and inspect a sample agenda.
+							Shown here: the implemented month layout with sample events,
+							tasks, overflow items, and the available calendar time scales.
 						</p>
-						<ul aria-label="Planned demo views">
+						<ul aria-label="Available calendar views">
 							<li>Month</li>
 							<li>Week</li>
 							<li>3-day</li>
@@ -218,23 +216,27 @@ export default function CalendarCaseStudyPage() {
 				</section>
 
 				<section className={styles.storySection}>
-					<p className={portfolioStyles.label}>What the demo will test / 04</p>
+					<p className={portfolioStyles.label}>What the preview shows / 04</p>
 					<div className={styles.proseGrid}>
 						<h3>Useful in a minute, honest about its boundaries.</h3>
 						<div className={styles.prose}>
 							<p>
-								The portfolio preview will use a fixed sample month rather than
-								real personal data. It should make the design understandable
-								without asking for permissions, creating an account, or saving
-								anything outside the current browser session.
+								The portfolio preview uses a fixed sample month rather than real
+								personal data. It makes the completed layout understandable
+								without asking for permissions, creating an account, or
+								accessing IndexedDB.
 							</p>
 							<ul className={styles.checkList}>
 								<li>
-									Move backward and forward without losing the selected view.
+									Distinguish events from tasks without adding visual noise.
 								</li>
-								<li>Compare month, week, 3-day, and single-day information.</li>
-								<li>Open event details using pointer and keyboard input.</li>
-								<li>Reset to a known sample date at any point.</li>
+								<li>
+									Keep dates, items, and overflow states readable at a glance.
+								</li>
+								<li>Expose month, week, 3-day, and single-day time scales.</li>
+								<li>
+									Separate the portfolio representation from personal data.
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -248,7 +250,7 @@ export default function CalendarCaseStudyPage() {
 					<p>
 						The first public milestone is intentionally narrow: dependable event
 						management, readable calendar views, resilient local storage, and a
-						portfolio-safe demo. Accounts, cloud sync, and external calendar
+						portfolio-safe preview. Accounts, cloud sync, and external calendar
 						connections come only after that baseline feels complete.
 					</p>
 				</section>

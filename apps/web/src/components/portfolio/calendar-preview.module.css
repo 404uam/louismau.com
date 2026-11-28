@@ -1,101 +1,143 @@
 .preview {
+	--preview-lime: #d5f76a;
+	--preview-lime-foreground: #3e590d;
+	--preview-border: #e9e9e5;
+	--preview-muted: #f6f6f2;
+	--preview-muted-foreground: #85867e;
 	position: absolute;
 	inset: 0;
-	display: grid;
-	grid-template-rows: 2rem 1fr;
-	background: #f7f7f2;
-	color: #292a25;
-}
-
-.browserBar {
-	display: grid;
-	grid-template-columns: 1fr auto 1fr;
-	align-items: center;
-	padding-inline: 0.9rem;
-	border-bottom: 1px solid rgb(41 42 37 / 12%);
-	font:
-		0.58rem / 1 var(--font-source-code-pro),
-		monospace;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-}
-
-.windowControls {
 	display: flex;
-	gap: 0.3rem;
+	min-width: 0;
+	flex-direction: column;
+	padding: 2rem;
+	background: #fff;
+	color: #24251f;
+	font-family: var(--font-sans), sans-serif;
 }
 
-.windowControls span {
-	width: 0.42rem;
-	height: 0.42rem;
-	border-radius: 50%;
-	background: rgb(41 42 37 / 28%);
-}
-
-.browserBarEnd {
-	justify-self: end;
-	color: rgb(41 42 37 / 52%);
-}
-
-.previewBody {
-	display: grid;
-	grid-template-rows: auto auto 1fr;
-	min-height: 0;
-	padding: clamp(0.85rem, 2.8vw, 2rem);
-}
-
-.previewHeading {
+.toolbar {
 	display: flex;
+	flex-shrink: 0;
 	align-items: end;
 	justify-content: space-between;
 	gap: 1rem;
-	padding-bottom: clamp(0.8rem, 2vw, 1.25rem);
+	margin-bottom: 1.25rem;
 }
 
-.previewHeading > div:first-child {
+.heading {
 	display: grid;
-	gap: 0.25rem;
+	min-width: 0;
+	gap: 0.35rem;
 }
 
-.previewHeading strong {
-	font-family: Georgia, "Times New Roman", serif;
-	font-size: clamp(1.2rem, 3.6vw, 2rem);
-	font-weight: 400;
-	letter-spacing: -0.045em;
-}
-
-.eyebrow {
-	font:
-		0.5rem / 1.5 var(--font-source-code-pro),
-		monospace;
-	letter-spacing: 0.1em;
+.heading > span {
+	color: var(--preview-muted-foreground);
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
 	text-transform: uppercase;
-	color: rgb(41 42 37 / 55%);
 }
 
-.previewActions {
+.heading strong {
+	overflow: hidden;
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: 2rem;
+	font-weight: 400;
+	line-height: 1.05;
+	letter-spacing: -0.045em;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.controls,
+.navigation {
 	display: flex;
 	align-items: center;
-	gap: 0.4rem;
-	font:
-		0.5rem / 1 var(--font-source-code-pro),
-		monospace;
 }
 
-.previewActions span {
+.controls {
+	flex-shrink: 0;
+	gap: 0.45rem;
+	font-size: 0.6rem;
+	line-height: 1;
+}
+
+.newItem,
+.viewPicker,
+.today,
+.navigation {
+	min-height: 1.9rem;
+	border: 1px solid var(--preview-border);
+	border-radius: 0.35rem;
+}
+
+.newItem,
+.today {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-inline: 0.6rem;
+}
+
+.newItem {
+	gap: 0.25rem;
+	border-color: var(--preview-lime);
+	background: var(--preview-lime);
+	color: var(--preview-lime-foreground);
+	font-weight: 600;
+}
+
+.plus {
+	font-size: 1.15em;
+}
+
+.viewPicker {
+	display: flex;
+	overflow: hidden;
+	background: #fff;
+}
+
+.viewPicker span,
+.navigation span {
 	display: grid;
 	place-items: center;
-	min-height: 1.55rem;
 	padding-inline: 0.55rem;
-	border: 1px solid rgb(41 42 37 / 14%);
-	border-radius: 999px;
 }
 
-.previewActions span:last-child {
-	width: 1.55rem;
+.weekdays span {
+	padding-inline: 0.45rem;
+}
+
+.selectedView {
+	background: var(--preview-muted);
+	color: #3a3b35;
+	font-weight: 600;
+}
+
+.navigation {
+	overflow: hidden;
+	font-family: Arial, sans-serif;
+	font-size: 1.4em;
+}
+
+.navigation span {
+	width: 1.9rem;
 	padding: 0;
-	color: #f7f7f2;
-	background: #2e6854;
+}
+
+.navigation span + span {
+	border-left: 1px solid var(--preview-border);
+}
+
+.calendar {
+	display: flex;
+	min-height: 0;
+	flex: 1;
+	flex-direction: column;
+	overflow: hidden;
+	border: 1px solid var(--preview-border);
+	border-radius: 0.35rem;
+	background: #fff;
 }
 
 .weekdays,
@@ -105,39 +147,33 @@
 }
 
 .weekdays {
+	height: 2rem;
+	flex-shrink: 0;
 	align-items: center;
-	height: 1.65rem;
-	color: rgb(41 42 37 / 48%);
-	font:
-		0.45rem / 1 var(--font-source-code-pro),
-		monospace;
-	letter-spacing: 0.06em;
+	border-bottom: 1px solid var(--preview-border);
+	color: var(--preview-muted-foreground);
+	font-size: 0.6rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
 	text-transform: uppercase;
 }
 
-.weekdays span {
-	padding-left: clamp(0.25rem, 1vw, 0.65rem);
+.weekdays abbr {
+	text-decoration: none;
 }
 
 .monthGrid {
-	grid-template-rows: repeat(6, minmax(0, 1fr));
 	min-height: 0;
-	border: 1px solid rgb(41 42 37 / 13%);
-	border-radius: 0.35rem;
-	overflow: hidden;
-	background: rgb(255 255 255 / 64%);
+	flex: 1;
+	grid-template-rows: repeat(6, minmax(0, 1fr));
 }
 
 .day {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	gap: 0.2rem;
 	min-width: 0;
-	padding: clamp(0.2rem, 0.8vw, 0.55rem);
-	border-right: 1px solid rgb(41 42 37 / 10%);
-	border-bottom: 1px solid rgb(41 42 37 / 10%);
-	font-size: clamp(0.45rem, 1vw, 0.65rem);
+	overflow: hidden;
+	padding: 0.4rem;
+	border-right: 1px solid var(--preview-border);
+	border-bottom: 1px solid var(--preview-border);
 }
 
 .day:nth-child(7n) {
@@ -148,46 +184,214 @@
 	border-bottom: 0;
 }
 
-.day > span {
+.day time {
 	display: grid;
+	width: 1.25rem;
+	height: 1.25rem;
 	place-items: center;
-	width: clamp(1rem, 2.5vw, 1.45rem);
-	height: clamp(1rem, 2.5vw, 1.45rem);
 	border-radius: 50%;
+	font-size: 0.6rem;
+	font-weight: 500;
 }
 
 .outsideMonth {
-	color: rgb(41 42 37 / 28%);
-	background: rgb(41 42 37 / 3%);
+	background: var(--preview-muted);
+	color: #b2b3ac;
 }
 
-.today {
-	color: #f7f7f2;
-	background: #2e6854;
+.day .current {
+	background: var(--preview-lime);
+	color: var(--preview-lime-foreground);
+	font-weight: 700;
 }
 
-.day i {
-	display: block;
-	width: 80%;
-	min-height: 0.2rem;
-	border-radius: 999px;
+.itemList {
+	display: flex;
+	min-width: 0;
+	flex-direction: column;
+	gap: 0.15rem;
+	margin-top: 0.25rem;
 }
 
-.eventBlue {
-	background: #7da8b7;
+.event,
+.task,
+.more {
+	display: flex;
+	min-width: 0;
+	align-items: center;
+	min-height: 1.15rem;
+	font-size: 0.52rem;
+	line-height: 1.1;
 }
 
-.eventClay {
-	background: #c58c6d;
+.event {
+	gap: 0.3em;
+	padding: 0 0.28em;
+	overflow: hidden;
+	border-left: 0.13rem solid #9fc51e;
+	border-radius: 0.12rem;
+	background: #f1f9d6;
 }
 
-.eventSage {
-	background: #a4aa83;
+.eventTime {
+	flex-shrink: 0;
+	max-width: 48%;
+	overflow: hidden;
+	color: #717568;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
-@media (prefers-reduced-motion: reduce) {
-	.preview {
-		animation: none;
-		transition: none;
+.task {
+	gap: 0.3em;
+	overflow: hidden;
+	padding: 0 0.2em;
+}
+
+.taskDot {
+	width: 0.3rem;
+	height: 0.3rem;
+	flex-shrink: 0;
+	border-radius: 50%;
+	background: #9fc51e;
+}
+
+.itemTitle {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.more {
+	padding-inline: 0.2em;
+	color: var(--preview-muted-foreground);
+	font-weight: 600;
+}
+
+.compact {
+	padding: 1.25rem;
+}
+
+.compact .toolbar {
+	align-items: center;
+	margin-bottom: 0.8rem;
+}
+
+.compact .heading strong {
+	font-size: 1.55rem;
+}
+
+.compact .newItem,
+.compact .today,
+.compact .navigation,
+.compact .eventTime,
+.compact .itemList > :nth-child(n + 2) {
+	display: none;
+}
+
+.compact .controls {
+	gap: 0.25rem;
+}
+
+.compact .event,
+.compact .task,
+.compact .more {
+	min-height: 0.8rem;
+	font-size: 0.4rem;
+}
+
+.compact .day {
+	padding: 0.25rem;
+}
+
+.compact .day time {
+	width: 0.9rem;
+	height: 0.9rem;
+	font-size: 0.48rem;
+}
+
+@media (max-width: 1023px) {
+	.toolbar {
+		align-items: center;
+		margin-bottom: 0.8rem;
+	}
+
+	.controls {
+		gap: 0.25rem;
+	}
+
+	.newItem,
+	.eventTime {
+		display: none;
+	}
+
+	.itemList > :nth-child(n + 2),
+	.today,
+	.navigation {
+		display: none;
+	}
+
+	.event,
+	.task,
+	.more {
+		min-height: 0.8rem;
+		font-size: 0.4rem;
+	}
+
+	.day time {
+		width: 0.9rem;
+		height: 0.9rem;
+	}
+}
+
+@media (max-width: 639px) {
+	.newItem,
+	.viewPicker,
+	.today,
+	.navigation {
+		display: none;
+	}
+}
+
+@media (max-width: 479px) {
+	.preview,
+	.compact {
+		padding: 0.6rem;
+	}
+
+	.toolbar,
+	.compact .toolbar {
+		margin-bottom: 0.45rem;
+	}
+
+	.heading strong,
+	.compact .heading strong {
+		font-size: 1.1rem;
+	}
+
+	.heading > span {
+		font-size: 0.4rem;
+	}
+
+	.weekdays {
+		height: 1.35rem;
+		font-size: 0.42rem;
+	}
+
+	.day,
+	.compact .day {
+		padding: 0.1rem;
+	}
+
+	.day time,
+	.compact .day time {
+		width: 0.65rem;
+		height: 0.65rem;
+		font-size: 0.38rem;
+	}
+
+	.itemList {
+		display: none;
 	}
 }
